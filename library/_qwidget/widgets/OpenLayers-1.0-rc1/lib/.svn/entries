@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="685"
+   name=""
+   committed-date="2006-06-22T19:28:31.951707Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/lib"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="394"
+   name="Prototype.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-05-26T04:01:14.031300Z"
+   checksum="d8d7abb344f2055ac5f02f89db79a20c"
+   last-author="follower"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+<entry
+   name="OpenLayers"
+   kind="dir"/>
+<entry
+   name="Rico"
+   kind="dir"/>
+<entry
+   committed-rev="675"
+   name="OpenLayers.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-22T15:59:23.465152Z"
+   checksum="5abf203d2a9bf55d871c3a8ae6a811e3"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+</wc-entries>

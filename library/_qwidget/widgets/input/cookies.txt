@@ -1,0 +1,11 @@
+
+if(isset($_GET['center'])){$center=$_GET['center'];}else{$center='0.000000000%2c0.000000000';}//Brooklyn+Bridge,New+York,NY;
+if(isset($_GET['zoom'])){$zoom=$_GET['zoom'];}else{$zoom='11';}//1,2,3,...,20;
+if(isset($_GET['size'])){$size=$_GET['size'];}else{$size="600x300";}//600x300;
+if(isset($_GET['maptype'])){$maptype=$_GET['maptype'];}else{$maptype="roadmap";};//roadmap|hybrid|satellite
+if(isset($_GET['markers'])){
+	$markers_array=$_GET['markers'];
+	$markers=implode('&markers=',$markers_array);
+}else{
+	$markers="";
+};

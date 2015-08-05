@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        @font-face
+        {
+            font-family: E0FFaa;
+            /*src: url('font/Droid-Sans/DroidSans.ttf');*/
+            src: url('font/droid-light.woff');
+        }
+        body{
+            margin:0px;
+            padding:0px;
+            font-family: E0FFaa;
+        }
+        table{
+            border-collapse: collapse;
+            margin:0px;
+            padding:0px;
+        }
+        #appContainer{
+            width:100%;
+        }
+        #sideList{
+            display:inline-block;
+            background-image:url('img/backgroundStripes.png');
+            max-height:640px;
+            min-height:640px;
+        }
+        #visuals{
+            display:inline-block;
+            column-count:2;
+            column-fill:auto;
+            vertical-align: top;
+            max-height:610px;
+            min-height:610px;
+            width:575px;
+            border-style: solid;
+            border-width: 7px 7px;
+            border-image: url(img/radio_wh_full.png) 7 repeat;
+            /*border-width: 15px 14px;
+            border-image: url(img/BallButton_Grey.png) 15 14 fill repeat;*/
+            overflow-y:scroll;
+        }
+        #codeView{
+            display:inline-block;
+            vertical-align: top;
+            max-height:625px;
+            min-height:625px;
+            width:410px;
+            overflow: scroll;
+            font-family: Consolas, monospace;
+            font-size: 12px;
+            border-width: 7px 7px;
+            border-image: url(img/radio_wh_full.png) 7 repeat;
+
+        }
+        .vspacer{
+
+        }
+        #spacer{
+            display:inline-block;
+            background-image:url('img/bkbtn.png');
+            width:6px;
+            margin-left:-5px;
+            margin-right:-5px;
+            height:640px;
+            max-height:625px;
+            min-height:625px;
+            cursor:ew-resize;
+        }
+        .Button{
+            margin:2px;
+            cursor:pointer;
+            /*border-width:5px ;
+            border-image: url(img/button.png) 5 fill repeat stretch;*/
+            border-width: 7px 7px;
+            border-image: url(img/radio_wh_full.png) 7 fill repeat;
+        }
+        .Button:hover{
+            /*border-image: url(img/button_clicked.png) 5 fill repeat stretch;*/
+            border-width:7px ;
+            border-image: url(img/button.png) 7 fill repeat stretch
+        }
+        .buttonText{
+            width:150px;
+        }
+        .smallTitle{
+            font-size: 12px;
+            font-style: italic;
+            background:rgba(255,255,255,.3);
+            margin-right: 8px;
+            margin-bottom: 2px;
+            padding-left: 8px;
+            border-radius: 5px;
+            cursor:pointer;
+        }
+        .smallTitle:hover{
+            background:rgba(255,255,255,.6);
+        }
+        .smallLink{
+            display:inline-block;
+            float:right;
+            background-image: url("img/radio_bk_empty.png");
+            width: 16px;
+            height: 16px;
+        }
+        .smallLink:hover{
+            background-image: url("img/radio_bk_full.png");
+        }
+    </style>
+    <style>
+        .method{
+            vertical-align: top;
+            display:inline-block;
+            margin:8px;
+            box-shadow: 0px 0px 8px #000;
+            background: #0ddee2;
+            width:241px;
+            padding:3px;
+        }
+        .publicMethod{
+            vertical-align: top;
+            display:inline-block;
+            margin:8px;
+            box-shadow: 0px 0px 8px #000;
+            background: #489ebd;
+            width:241px;
+            padding:3px;
+        }
+        .privateMethod{
+            vertical-align: top;
+            display:inline-block;
+            margin:8px;
+            box-shadow: 0px 0px 8px #000;
+            background: #778f9a;
+            width:241px;
+            padding:3px;
+        }
+        .method .handle{
+            cursor:pointer;
+            background-image: url('img/win_min.png');
+            display: inline-block;
+            vertical-align: middle;
+            width:29px;
+            height:30px;
+        }
+        .privateMethod input,.publicMethod input,.method input{
+            /*background: url('img/shine32.png');
+            color:#FFF;*/
+            border:1px solid #000;
+            width:175px;
+            /*height:28px;*/
+            border-radius: 5px;
+            margin-right:5px;
+        }
+        .privateMethod  textarea,.publicMethod textarea,.method textarea{
+            width:230px;
+            max-width:230px;
+            min-width:230px;
+        }
+        .method .link{
+            display:inline-block;
+            background: url('img/property-conn2_32.png');
+            width:28px;
+            height:28px;
+            vertical-align: middle;
+        }
+        .method .link:hover{
+            background: url('img/property-conn2_32-full.png');
+        }
+    </style>
+    <style>
+        .property{
+            vertical-align: top;
+            display:inline-block;
+            margin:8px;
+            box-shadow: 0px 0px 8px #000;
+            background: #de0082;
+            width:241px;
+            padding:3px;
+        }
+        .publicProperty {
+            vertical-align: top;
+            display:inline-block;
+            margin:8px;
+            box-shadow: 0px 0px 8px #000;
+            background: #b54470;
+            width:241px;
+            padding:3px;
+        }
+        .privateProperty{
+            vertical-align: top;
+            display:inline-block;
+            margin:8px;
+            box-shadow: 0px 0px 8px #000;
+            background: #c595a0;
+            width:241px;
+            padding:3px;
+        }
+        .property .handle{
+            cursor:pointer;
+            background-image: url('img/win_min.png');
+            display: inline-block;
+            vertical-align: middle;
+            width:29px;
+            height:30px;
+        }
+        .publicProperty input,.privateProperty input,.property input{
+            /*background: url('img/shine32.png');
+            color:#FFF;
+            border:1px solid #d558dd;*/
+            width:175px;
+            /*height:28px;*/
+            border-radius: 5px;
+            margin-right:5px;
+        }
+        .publicProperty textarea,.privateProperty textarea,.property textarea{
+            width:230px;
+            max-width:230px;
+            min-width:230px;
+            border-radius: 5px;
+        }
+        .property .link{
+            display:inline-block;
+            background: url('img/property-conn2_32.png');
+            width:28px;
+            height:28px;
+            vertical-align: middle;
+        }
+        .property .link:hover{
+            background: url('img/property-conn2_32-full.png');
+        }
+    </style>
+    <style>
+        .object{
+            vertical-align: top;
+            display:inline-block;
+            margin:4px;
+            width:252px;
+            box-shadow: 0px 0px 8px #000;
+            border-style: solid;
+            border-width: 15px 14px;
+            border-image: url(img/BallButton_Yellow.png) 15 14 fill repeat;
+            border-radius: 15px;
+        }
+        .object .title{
+            padding:2px;
+            border-bottom: 2px solid #cca700;
+        }
+        .object input.name{
+            /*background: url('img/shine32.png');
+            color:#FFF;
+            border:1px solid #000;*/
+            width:185px;
+            /*height:28px;
+            border-radius: 5px;*/
+            margin-right:5px;
+        }
+        .object .pointer{
+            cursor:move;
+            background-image: url('img/win_min.png');
+            display: inline-block;
+            vertical-align: middle;
+            width:29px;
+            height:30px;
+        }
+        .object button{
+            /*background-image: url('img/shine32.png');
+            color:#FFF;*/
+            cursor:pointer;
+            margin-left:1px;
+            margin-right:1px;
+            width:28px;
+            height:28px;
+        }
+        .object .body .view{
+            margin:2px;
+            /*border-bottom: 1px dashed #ffee00;*/
+        }
+    </style>
+    <style>
+        .ubct_text-layer {
+            color: black;
+            font: inherit !important;
+        }
+
+        .ubct_content {
+            cursor: text;
+        }
+
+        .ubct_layer {
+            z-index: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .ubct_line {
+            white-space: nowrap;
+        }
+        .ubct_comment { color: rgb(76, 136, 107); }
+        .ubct_operator {
+            color: rgb(104, 118, 135);
+        }
+
+        .ubct_support.ubct_function {
+            color: rgb(60, 76, 114);
+        }
+
+        .ubct_language {
+            color: rgb(88, 92, 246);
+        }
+
+        .ubct_variable {
+            color: rgb(49, 132, 149);
+        }
+
+        .ubct_keyword {
+            color: blue;
+        }
+
+        .ubct_support.ubct_function {
+            color: rgb(60, 76, 114);
+        }
+
+        .ubct_entity.ubct_name.ubct_function {
+            color: rgb(0, 0, 162);
+        }
+
+        .ubct_type {
+            color: blue
+        }
+
+        .ubct_string {
+            color: rgb(3, 106, 7);
+        }
+
+        .ubct_variable {
+            color: rgb(49, 132, 149);
+        }
+        .ubct_class { color: rgb(109, 121, 222); }
+        #mask{
+            position:absolute;
+            top:0px;
+            left:0px;
+            background-color: rgba(0,0,0,0.01);
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+    <link type="text/css" rel="stylesheet" href="css/SyntaxHighlighter.css"></link>
+    <script language="javascript" src="js/lib/shCore.js"></script>
+    <script language="javascript" src="js/lib/shBrushJScript.js"></script>
+
+    <script type="text/javascript" src="js/MAKE.js"></script>
+    <script type="text/javascript" src="js/level1.js"></script>
+    <script type="text/javascript" src="js/level2.js"></script>
+    <script type="text/javascript" src="js/lib/Table.js"></script>
+    <script type="text/javascript" id="Main">
+        var PowerBuilderApplication=(function(){
+            var CLASS=function PowerBuilderApplication(){
+                var _APPLICATION=this;
+                QObject.apply(this);
+                var menuContainer=document.getElementById("menu")
+
+                var sideListContainer=document.getElementById("sideList")
+                var visualsContainer=document.getElementById("visuals")
+                var codeViewContainer=document.getElementById("codeView")
+                var spacer=document.getElementById("spacer")
+                window.onresize=function(event){
+                    var w =window.innerWidth,h=window.innerHeight;
+                    sideListContainer.style.maxHeight=h-10+"px";
+                    sideListContainer.style.minHeight=h-10+"px";
+                    spacer.style.maxHeight=h-10+"px";
+                    spacer.style.minHeight=h-10+"px";
+                    visualsContainer.style.maxHeight=h-25+"px";
+                    visualsContainer.style.minHeight=h-25+"px";
+                    codeViewContainer.style.maxHeight=h-25+"px";
+                    codeViewContainer.style.minHeight=h-25+"px";
+                    codeViewContainer.style.width=w-sideListContainer.offsetWidth-visualsContainer.offsetWidth-45+"px";
+                };
+                fmc=document.getElementById("fmcode");
+                var resizing=false;
+                var spacer=document.getElementById("spacer");
+                var mask=document.getElementById("mask");
+                spacer.onmousedown=function(event){
+                    resizing=true;
+                    mask.style.display='';
+                    mask.style.width=document.body.offsetWidth+'px';
+                    mask.style.height=document.body.offsetHeight+'px';
+                }
+                document.body.onmousemove=function(event){
+                    if(resizing){
+                        var p={x:event.clientX,y:event.clientY}
+                        var ws=spacer.offsetWidth
+                        var wsl=sideListContainer.offsetWidth;
+                        var wv=visualsContainer.offsetWidth;
+                        var wd=document.body.offsetWidth;
+                        var pp=(p.x-wsl)/(wd-wsl),ow=(wd-wsl);
+                        var nwv=(p.x-wsl-ws)-35;
+                        var nwcv=ow-nwv-2*ws-35;
+                        visualsContainer.style.width=nwv+"px";
+                        codeViewContainer.style.width=nwcv+"px";
+                    }
+                }
+                document.body.onclick=function(event){
+                    if(event.target.className=="smallTitle"){
+                        var trg=event.target.nextElementSibling;
+                        if(trg.style.display=='none'){trg.style.display=''}
+                        else{trg.style.display='none'}
+                    }
+                }
+                mask.onmouseup=function(event){
+                    resizing=false;
+                    mask.style.display='none';
+                }
+
+                this.regenModel=function(context){
+                    var x= 0,y=0;
+                    context.font = "10pt Courier";
+                    context.clearRect(0,0,1000,1000);
+                    for(var i=0;i<this.Model().length;i++){
+                        context.save();
+                        context.translate(x,y);
+                        context.fill();
+                        context.stroke();
+                        context.restore();
+                        x+=x>450?(-x):90;
+                        y+=x>450?90:0;
+                    };
+                }
+                this.regenCode=function(container){
+                    CLASS.clearView(container);
+                    for(var i=0;i<this.Model().length;i++){
+                        this.Model()[i].genCode(container);
+                    };
+                }
+                this.updateCode=function(container){
+                    for(var i=0;i<this.Model().length;i++){
+                        this.Model()[i].updateCode(container);
+                    };
+                }
+                this.regenVisuals=function(container){
+                    CLASS.clearView(container);
+                    var x= 0,y=0;
+                    for(var i=0;i<this.Model().length;i++){
+                        var v=this.Model()[i].genView(container);
+                        v.style.left=x+sideListContainer.offsetWidth+'px';
+                        v.style.top=y+'px';
+                        y+=50;
+                    };
+                }
+                this.updateVisuals=function(container){
+                    for(var i=0;i<this.Model().length;i++){
+                        this.Model()[i].updateView(container);
+                    };
+                }
+
+                QArray.apply(this,['Model']);
+                this.Model.afterSet=function(byRefvalue){
+                    _APPLICATION.regenCode(codeViewContainer);
+                    _APPLICATION.regenVisuals(visualsContainer);
+                    s.style.height=(640-h)+"px";
+                }
+
+                FOCUSED_UNIT=_APPLICATION;
+                h=0;
+                t=new QViewTemplate('<div class="Button"><table>' +
+                        '<tbody><tr id="row1">' +
+                        '<td class="buttonText" align="right">##TXT##</td>' +
+                        '<td><img width="24px" src="##SRC##"/></td>' +
+                        '</tr></tbody></table></div>');
+
+                t0=t.ViewForArray({SRC:"img/BallButton_Red.png",TXT:"render code",PROTO:QObject}).View()
+                sideListContainer.appendChild(t0);
+                t0.onclick=function onclick(event){
+                    var ps=fmc.previousElementSibling.className;
+                    if(ps.className=='dp-highlighter nogutter')ps.parentNode.removeChild(ps);
+                    fmc.innerHTML=codeViewContainer.innerText;
+                    dp.SyntaxHighlighter.HighlightAll('code');
+                }
+                h+=t0.offsetHeight+3;
+
+                t4=t.ViewForArray({SRC:"img/BallButton_Yellow.png",TXT:"(public) QUnit",PROTO:QObject}).View()
+                sideListContainer.appendChild(t4);
+                t4.onclick=function onclick(event){
+                    _APPLICATION.Model(new QUnitView(_APPLICATION));
+                }
+                h+=t4.offsetHeight+3;
+
+                t1=t.ViewForArray({SRC:"img/BallButton_Violet.png",TXT:"(public) QProperty",PROTO:QProperty}).View();
+                sideListContainer.appendChild(t1);
+                t1.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new QPropertyView());
+                }
+                h+=t1.offsetHeight+3;
+
+                t5=t.ViewForArray({SRC:"img/BallButton_Magenta.png",TXT:"(public) property",PROTO:QObject}).View()
+                sideListContainer.appendChild(t5);
+                t5.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new PublicPropertyView());
+                }
+                h+=t5.offsetHeight+3;
+
+                t6=t.ViewForArray({SRC:"img/BallButton_LightGrey.png",TXT:"(private) property",PROTO:QObject}).View()
+                sideListContainer.appendChild(t6);
+                t6.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new PrivatePropertyView());
+                }
+                h+=t6.offsetHeight+3;
+
+                t2=t.ViewForArray({SRC:"img/BallButton_Cyan.png",TXT:"(public) QMethod",PROTO:QMethod}).View()
+                sideListContainer.appendChild(t2);
+                t2.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new QMethodView());
+                }
+                h+=t2.offsetHeight+3;
+
+                t7=t.ViewForArray({SRC:"img/BallButton_Magenta.png",TXT:"(public) method",PROTO:QObject}).View()
+                sideListContainer.appendChild(t7);
+                t7.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new PublicMethodView());
+                }
+                h+=t7.offsetHeight+3;
+
+                t8=t.ViewForArray({SRC:"img/BallButton_LightGrey.png",TXT:"(private) method",PROTO:QObject}).View()
+                sideListContainer.appendChild(t8);
+                t8.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new PrivateMethodView());
+                }
+                h+=t8.offsetHeight+3;
+
+                t3=t.ViewForArray({SRC:"img/BallButton_Green.png",TXT:"+QTemplate",PROTO:QTemplate}).View()
+                sideListContainer.appendChild(t3);
+                t3.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new QTemplateView());
+                }
+                h+=t3.offsetHeight+3;
+
+                t31=t.ViewForArray({SRC:"img/BallButton_LightGreen.png",TXT:"+QViewTemplate",PROTO:QTemplate}).View()
+                sideListContainer.appendChild(t31);
+                t31.onclick=function onclick(event){
+                    FOCUSED_UNIT.Model(new QViewTemplateView());
+                }
+                h+=t31.offsetHeight+3;
+
+                s=document.createElement('div');
+                s.className='vspacer';
+                sideListContainer.appendChild(s);
+                var ht=(document.height-h)+"px"
+                s.style.height=ht;
+                visualsContainer.style.height=document.height+"px";
+                codeViewContainer.style.height=document.height+"px";
+
+                matrix=[["a","b","c"],["number","number","number"],[4,5,6],[1,2,3],[7,8,9],[33,1,5],[1,33,4],[4,5,7]];
+                tab=new Table("MY_TABLE",matrix,0);
+                //console.log(tab.getMatrixView())
+                window.onresize(null);
+            }
+
+            CLASS.clearView=function (view){
+                while(view.childNodes.length>0){
+                    view.removeChild(view.childNodes[view.childNodes.length-1]);
+                }
+            }
+            return CLASS;
+        })()
+    </script>
+</head>
+<body onload="pba=new PowerBuilderApplication()">
+<div id="appContainer">
+    <div id="menu" colspan="3">
+
+    </div>
+    <div>
+        <div id="sideList">
+
+        </div>
+        <div id="visuals">
+
+        </div>
+        <div id="spacer">
+
+        </div>
+        <div id="codeView">
+
+        </div>
+    </div>
+<pre class="jscript:nogutter:nocontrolls" name='code' id="fmcode" style="display:none">
+    </pre>
+    <div>
+    </div>
+</div>
+<div id="mask" style="display:none"></div>
+</body>
+</html>

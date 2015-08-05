@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="657"
+   name=""
+   committed-date="2006-06-21T15:22:48.881907Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/lib/OpenLayers/Feature"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="657"
+   name="WFS.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="bc38461fd0d71f093e53b94a0f6c4309"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+</wc-entries>

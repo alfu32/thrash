@@ -1,0 +1,123 @@
+<style>
+    .ubct_text-layer {
+        color: black;
+        font: inherit !important;
+    }
+
+    .ubct_content {
+        cursor: text;
+    }
+
+    .ubct_layer {
+        z-index: 1;
+        position: absolute;
+        overflow: hidden;
+        white-space: nowrap;
+        height: 100%;
+        width: 100%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
+    .ubct_line {
+        white-space: nowrap;
+    }
+
+    .ubct_operator {
+        color: rgb(104, 118, 135);
+    }
+
+    .ubct_support.ubct_function {
+        color: rgb(60, 76, 114);
+    }
+
+    .ubct_language {
+        color: rgb(88, 92, 246);
+    }
+
+    .ubct_variable {
+        color: rgb(49, 132, 149);
+    }
+
+    .ubct_keyword {
+        color: blue;
+    }
+
+    .ubct_support.ubct_function {
+        color: rgb(60, 76, 114);
+    }
+
+    .ubct_entity.ubct_name.ubct_function {
+        color: rgb(0, 0, 162);
+    }
+
+    .ubct_type {
+        color: blue
+    }
+
+    .ubct_string {
+        color: rgb(3, 106, 7);
+    }
+
+    .ubct_variable {
+        color: rgb(49, 132, 149);
+    }
+</style>
+<div class="ace_layer ace_text-layer" style="padding: 0px 4px;">
+    <div class="ace_line" style="height:15px"><span class="ace_storage ace_type">function</span>&nbsp;<span
+            class="ace_entity ace_name ace_function">mm</span><span class="ace_paren ace_lparen">(</span><span
+            class="ace_paren ace_rparen">)</span><span class="ace_paren ace_lparen">{</span></div>
+    <div class="ace_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ace_identifier">UNIT</span><span
+            class="ace_keyword ace_operator">=</span><span class="ace_variable ace_language">this</span><span
+            class="ace_punctuation ace_operator">;</span></div>
+    <div class="ace_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="ace_storage ace_type">UNIT</span><span class="ace_punctuation ace_operator">.</span><span
+            class="ace_entity ace_name ace_function">CODE</span><span class="ace_keyword ace_operator">=</span><span
+            class="ace_storage ace_type">function</span><span class="ace_paren ace_lparen">(</span><span
+            class="ace_variable ace_parameter">data</span><span class="ace_paren ace_rparen">)</span><span
+            class="ace_paren ace_lparen">{</span><span class="ace_paren ace_rparen">}</span></div>
+    <div class="ace_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="ace_storage ace_type">this</span><span class="ace_punctuation ace_operator">.</span><span
+            class="ace_entity ace_name ace_function">newMethod</span><span
+            class="ace_keyword ace_operator">=</span><span class="ace_storage ace_type">function</span>&nbsp;<span
+            class="ace_entity ace_name ace_function">context_newMethod</span><span class="ace_paren ace_lparen">(</span><span
+            class="ace_variable ace_parameter">_reference</span><span class="ace_paren ace_rparen">)</span><span
+            class="ace_paren ace_lparen">{</span></div>
+    <div class="ace_line" style="height:15px"><span class="ace_indent-guide">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="ace_identifier">UNIT</span><span class="ace_punctuation ace_operator">.</span><span
+            class="ace_identifier">newMethod</span><span class="ace_punctuation ace_operator">.</span><span
+            class="ace_identifier">beforeExec</span><span class="ace_paren ace_lparen">(</span><span
+            class="ace_identifier">_reference</span><span class="ace_paren ace_rparen">)</span><span
+            class="ace_punctuation ace_operator">;</span></div>
+    <div class="ace_line" style="height:15px"><span class="ace_indent-guide">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="ace_identifier">UNIT</span><span class="ace_punctuation ace_operator">.</span><span
+            class="ace_identifier">CODE</span><span class="ace_paren ace_lparen">(</span><span class="ace_identifier">_reference</span><span
+            class="ace_paren ace_rparen">)</span><span class="ace_punctuation ace_operator">;</span></div>
+    <div class="ace_line" style="height:15px"><span class="ace_indent-guide">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="ace_identifier">UNIT</span><span class="ace_punctuation ace_operator">.</span><span
+            class="ace_identifier">newMethod</span><span class="ace_punctuation ace_operator">.</span><span
+            class="ace_identifier">afterExec</span><span class="ace_paren ace_lparen">(</span><span
+            class="ace_identifier">_reference</span><span class="ace_paren ace_rparen">)</span><span
+            class="ace_punctuation ace_operator">;</span></div>
+    <div class="ace_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ace_keyword">return</span>&nbsp;<span
+            class="ace_variable ace_language">this</span><span class="ace_punctuation ace_operator">;</span></div>
+    <div class="ace_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ace_paren ace_rparen">}</span><span
+            class="ace_punctuation ace_operator">;</span></div>
+    <div class="ace_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ace_identifier">UNIT</span><span
+            class="ace_punctuation ace_operator">.</span><span class="ace_storage ace_type">newMethod</span><span
+            class="ace_punctuation ace_operator">.</span><span
+            class="ace_entity ace_name ace_function">after</span><span class="ace_keyword ace_operator">=</span><span
+            class="ace_storage ace_type">function</span><span class="ace_paren ace_lparen">(</span><span
+            class="ace_variable ace_parameter">data</span><span class="ace_paren ace_rparen">)</span><span
+            class="ace_paren ace_lparen">{</span><span class="ace_paren ace_rparen">}</span></div>
+    <div class="ace_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ace_identifier">UNIT</span><span
+            class="ace_punctuation ace_operator">.</span><span class="ace_storage ace_type">newMethod</span><span
+            class="ace_punctuation ace_operator">.</span><span
+            class="ace_entity ace_name ace_function">before</span><span class="ace_keyword ace_operator">=</span><span
+            class="ace_storage ace_type">function</span><span class="ace_paren ace_lparen">(</span><span
+            class="ace_variable ace_parameter">data</span><span class="ace_paren ace_rparen">)</span><span
+            class="ace_paren ace_lparen">{</span><span class="ace_paren ace_rparen">}</span></div>
+    <div class="ace_line" style="height:15px"><span class="ace_paren ace_rparen">}</span></div>
+</div>

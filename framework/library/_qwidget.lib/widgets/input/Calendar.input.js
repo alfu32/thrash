@@ -1,0 +1,206 @@
+var Calendar=(function(){
+	var WIDGET=function Calendar(targetElement){
+    	Base.call(this,['Calendar']);
+		var _THIS=this;
+		Widget.call(this);
+		this.View(MAKE.div({},{
+			/*zoom:'1'
+			,opacity:'1'
+			,border:'1px solid #2AA'
+			,width:'290px'
+			,height:'232px'
+			,*/backgroundColor:'#FFF'
+		}));
+		this.View().className=''//'CalendarWidget';
+		var view=this.View();
+		
+		QProperty.call(this,['DateDirectTransform']);
+		_THIS.DateDirectTransform(CALENDAR_UTILS.SQL_DATE);
+		
+		QProperty.call(this,['DateInverseTransform']);
+		_THIS.DateInverseTransform(CALENDAR_UTILS.SQL_DATE);
+		
+		QProperty.call(this,['OnClose']);
+		_THIS.OnClose(function(ref){});
+		
+		QProperty.call(this,['OnChange']);
+		_THIS.OnChange(function(ref,date){});
+		
+		var month=new Month();
+		QProperty.call(this,['Date']);
+		this.Date.afterSet=function(_date){
+			title.innerHTML=_date.getFullYear()+" "+CALENDAR_UTILS.MONTHS[_date.getMonth()].name;
+			month.Date(_date);
+			_THIS.Data(month.getDayList());
+		}
+		QProperty.call(this,['DisabledDate']);
+		_THIS.DisabledDate(function(date){return false;});
+		_THIS.DisabledDate.afterSet=function(formula){
+			renderView();
+		}
+		
+		QProperty.call(this,['Data']);
+		this.Data.afterSet=function(_raw_data){
+			renderView();
+		}
+		this.Parent.afterSet=function(_parent){
+			targetElement.disabled=true;
+			renderView();
+			_parent.appendChild(_THIS.View())
+		}
+		
+		var closeBtn=MAKE.button({
+			className:'CloseButton'
+			,innerHTML:WIDGET.STRINGS['PARAMETRAGEAD.LABEL.CLOSE']
+			,onmousedown:function(event){
+				_THIS.OnClose()(_THIS);
+				_THIS.Parent().removeChild(_THIS.View());
+				targetElement.disabled=false;
+				targetElement.focus();
+				/*WIDGET.kill({widget:_THIS});
+				NORM.preventDefault(event);
+				NORM.stopPropagation(event);*/
+			}
+		});
+		var todayBtn=MAKE.button({
+			className:'CloseButton'
+			,innerHTML:WIDGET.STRINGS['PARAMETRAGEAD.LABEL.TODAY']
+			,onmousedown:function(event){
+				var date=_THIS.DateDirectTransform()(new Date());
+				try{
+					_THIS.OnChange()(targetElement,date);
+					targetElement.value=(date);
+					targetElement.onchange(event);
+				}catch(error){
+					
+				}
+			}
+		});
+		var headLayout=MAKE.center();
+		var prevYear=MAKE.button({innerHTML:"&lt;&lt;"
+			,onmousedown:function(event){
+				var d=_THIS.Date();
+				d.setFullYear(d.getFullYear()-1);
+				_THIS.Date(d);
+				NORM.preventDefault(event);
+				NORM.stopPropagation(event);
+			}
+		});
+		var prevMonth=MAKE.button({innerHTML:"&lt;"
+			,onmousedown:function(event){
+				var d=_THIS.Date();
+				d.setMonth(d.getMonth()-1);
+				_THIS.Date(d);
+			NORM.preventDefault(event);
+			NORM.stopPropagation(event);
+			}});
+		var title=MAKE.strong({className:'Message',innerHTML:"Title$",align:"center"},{
+				width:'145px'
+				,display:'inline-block'
+				,zoom:'1'
+			});
+		var nextMonth=MAKE.button({innerHTML:"&gt;"
+			,onmousedown:function(event){
+				var d=_THIS.Date();
+				d.setMonth(d.getMonth()+1);
+				_THIS.Date(d);
+				NORM.preventDefault(event);
+				NORM.stopPropagation(event);
+			}});
+		var nextYear=MAKE.button({innerHTML:"&gt;&gt;"
+			,onmousedown:function(event){
+				var d=_THIS.Date();
+				d.setFullYear(d.getFullYear()+1);
+				_THIS.Date(d);
+				NORM.preventDefault(event);
+				NORM.stopPropagation(event);
+			}});
+			view.appendChild(closeBtn);
+			view.appendChild(todayBtn);
+			view.appendChild(MAKE.hr());
+					
+			headLayout.appendChild(prevYear);
+			headLayout.appendChild(prevMonth);
+			headLayout.appendChild(title);
+			headLayout.appendChild(nextMonth);
+			headLayout.appendChild(nextYear);
+
+			view.appendChild(headLayout);
+			view.appendChild(MAKE.hr());
+		var bodyLayout=MAKE.center();
+		var body=MAKE.div();
+			bodyLayout.appendChild(body);
+			view.appendChild(bodyLayout);
+		
+		var renderView=function(){
+			var d=_THIS.Data();
+			var v=body;
+			WIDGET.clearView(v);
+			for(var i=0;i < 7;i++){
+				var e=MAKE.strong({className:'Day',innerHTML:CALENDAR_UTILS.DAYS[(i+1)%7].name.substr(0,2)},{
+					width:'34px'
+					,backgroundColor:'#C0C0EF'
+					,display:'inline-block'
+					,zoom:'1'
+				});
+				if((((i+1)%7)%6)!=0)e.style.backgroundColor='#E0E0EF';
+				v.appendChild(e);
+			}
+			v.appendChild(MAKE.br());
+			for(var i=0;i < d.length;i++){
+				var day=d[i];
+				var dd=day.day().getDate();
+				var e=MAKE.strong({className:'Day'},{
+					width:'34px'
+					,backgroundColor:'#C0C0EF'
+					,display:'inline-block'
+					,zoom:'1'
+				});
+				var b=MAKE.button({
+					className:'DayButton',
+					innerHTML:(dd<10)?("0"+dd):dd,
+					onmousedown:(function (target,date){
+						return function(event){
+							try{
+							_THIS.OnChange()(target,date);
+							target.value=_THIS.DateDirectTransform()(date);
+							target.onchange(event);
+							}catch(error){
+								
+							}
+						}
+						})(targetElement,day.day())
+					});
+				if(_THIS.DisabledDate()(day.day())){
+					b.disabled="true";
+				}
+				if(!day.isValid())b.disabled="true";
+				if(((day.day().getDay()+6)%7)<5)e.style.backgroundColor='#E0E0EF';
+				
+				e.appendChild(b);
+				if(i>0 && (i%7)==0)v.appendChild(MAKE.br());
+				v.appendChild(e);
+			}
+		}
+	};
+	WidgetStatic.call(WIDGET);
+	WIDGET.STRINGS_FETCH('Calendar.input',['PARAMETRAGEAD.LABEL.TODAY','PARAMETRAGEAD.LABEL.CLOSE'])
+	/*WIDGET.onClick_listener=function(instance,target,date){
+		return function(event){
+			target.value=CALENDAR_UTILS.SQL_DATE(date);
+			try{
+			target.onchange(event);
+			}catch(error){
+				
+			}
+			//instance.Parent().removeChild(instance.View());
+			//WIDGET.kill({widget:instance});
+			//target.disabled=false;
+			//target.focus();
+			
+		}
+	}*/
+	return WIDGET;
+}
+
+)();

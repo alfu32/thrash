@@ -1,0 +1,150 @@
+@CHARSET "UTF-8";
+
+@font-face {
+	font-family: 'druid';
+	src: url('../fonts/DroidSans.ttf');
+}
+@font-face {
+	font-family: 'druid_mono';
+	src: url('../fonts/DroidSansMono.ttf');
+}
+.textbox {
+	font-family: 'druid';
+	margin: 20px;
+	padding: 20px
+}
+#container {
+	font-family: 'druid';
+	background-color: #FFFFFF;
+	margin: 20px;
+	box-shadow: 0px 0px 12px #000000;
+}
+.separator_down {
+	margin-top: 0px;
+	padding-top: 0px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	background-image: url(../images/bkg_separator_down.png);
+	background-size: 100% 150%;
+	width: 100%;
+	height: 12px;
+}
+.spaced_out {
+	margin: 20px;
+	padding: 20px;
+}
+.spaced_in {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+.separator_up {
+	margin-top: 0px;
+	padding-top: 0px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	background-image: url(../images/bkg_separator_up.png);
+	background-size: 100% 150%;
+	width: 100%;
+	height: 12px;
+}
+.button {
+	background-color: rgba(255,225,64,127);
+	color: rgba(64,64,64,127);
+	background-image: url(../images/bkg_button.png);
+	background-size: 100% 100%;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	box-shadow: -3px 0px 10px #666666;
+	text-shadow: 0px 0px 3px #aaaaaa;
+	font-size: 16px;
+	cursor: pointer;
+}
+.button_noshadow {
+	margin-left:16px;
+	margin-right:16px;
+	padding-top:8px;
+	background-color: rgba(225,225,225,127);
+	border:2px solid rgba(255,255,255,0.3);
+	color: rgba(64,64,64,127);
+	background-image: url(../images/bkg_button.png);
+	background-size: 100% 100%;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	text-shadow: 0px 0px 3px #aaaaaa;
+	font-size: 16px;
+	cursor: pointer;
+}
+.button_big {
+	width: 35%;
+	background-color: rgba(255,225,64,127);
+	color: rgba(64,64,64,127);
+	background-image: url(../images/bkg_button.png);
+	background-size: 100% 100%;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	box-shadow: -3px 0px 10px #666666;
+	text-shadow: 0px 0px 3px #aaaaaa;
+	font-size: 32px;
+	cursor: pointer;
+}
+.button_defocus {
+	background-color: rgba(225,225,192,127);
+	box-shadow: 3px 0px 10px #666666;
+	text-shadow: 0px 0px 3px #aaaaaa;
+}
+.button_big:hover, .button:hover, .button_noshadow:hover{
+	text-shadow: 0px 0px 8px #aaaaaa;
+	box-shadow: -3px 0px 16px #888888;
+	background-color: rgba(255,225,0,127);
+	color: rgba(0,0,0,255);
+}
+.image_big {
+	width: 100%;
+}
+.cell {
+	display: table-cell;
+	vertical-align: top;
+	text-align: left;
+	padding: 5px;
+}
+.cell_centered {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.table {
+	display: table;
+	height: 30%;
+	width: 100%;
+}
+.table_small {
+	display: table;
+	height: 10%;
+	width: 100%;
+}
+h2 {
+	width: 100%;
+	border-bottom: 1px dotted #556250;
+}
+.main_paragraph {
+	color: #FFFFEF;
+	background-image: url(../images/bkg_std.png);
+	background-size: 100% 100%;
+	margin-top: 0px;
+	padding-top: 0px;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
+	padding-left: 30px;
+	padding-right: 30px;
+	box-shadow: 5px 1px 8px rgba(100,100,100,8);
+}
+.codeblock {
+	padding: 20px;
+	margin: 10px;
+	font-family: druid_mono;
+	font-size: 12px;
+	border: 1px solid #AAAAFF;
+}

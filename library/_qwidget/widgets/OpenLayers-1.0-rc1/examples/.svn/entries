@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="685"
+   name=""
+   committed-date="2006-06-22T19:28:31.951707Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/examples"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="610"
+   name="google.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-17T14:41:31.820354Z"
+   checksum="b099d8cfc0520c825b850ce013e16400"
+   last-author="euzuro"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="614"
+   name="yahoo.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-17T15:11:36.679963Z"
+   checksum="269f4fa5be4c00e392f82d6e223d0f8c"
+   last-author="euzuro"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="685"
+   name="freemap.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-22T19:28:31.951707Z"
+   checksum="e11880e0a39e26b17b03b9726cc45f41"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="563"
+   name="proxy.cgi"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:37:49.787352Z"
+   checksum="c091f646b67e812eea1dbd4a8faff30a"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="630"
+   name="click.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-20T22:51:55.400365Z"
+   checksum="91f5c8c624b47b6dff51934a7f88fa9a"
+   last-author="euzuro"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="562"
+   name="popups.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:01:07.162585Z"
+   checksum="275a02f6a8cb129607fb830479378a00"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="630"
+   name="markerss.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-20T22:51:55.400365Z"
+   checksum="7141f6164e41db9c8976c4c7afcba100"
+   last-author="euzuro"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="667"
+   name="kamap.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-22T10:49:55.458254Z"
+   checksum="a18dffcdbce3f9acdd4e16c0c2991afd"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="675"
+   name="notile.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-22T15:59:23.465152Z"
+   checksum="e5f768de9d04b75876f5142f640ac79e"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="562"
+   name="example.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:01:07.162585Z"
+   checksum="1254d126e3f31dd60db82c254da8f25b"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="586"
+   name="wfs.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-14T19:51:22.101507Z"
+   checksum="35bcdb36d4bc80af4549b2516f5822f3"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="435"
+   name="textfile.txt"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-05-27T19:31:06.257184Z"
+   checksum="a435a075f6748f6ed94f564f8ac29aba"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="562"
+   name="controls.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:01:07.162585Z"
+   checksum="b9f4467285b8aefc3f2f46ee8b97d613"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="562"
+   name="markerResize.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:01:07.162585Z"
+   checksum="a9827b6baca9b00922bca27d6d6d6469"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="562"
+   name="markers.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:01:07.162585Z"
+   checksum="6527925a947cad6938124ea6e0a5c7d6"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="562"
+   name="mvs.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:01:07.162585Z"
+   checksum="b9277b7cd430a405fc71d8dbe480bf0c"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="562"
+   name="markersTextLayer.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-09T04:01:07.162585Z"
+   checksum="b987ffe0c6b44aecdf127a37fe6131b5"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="583"
+   name="ciesin.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-13T23:57:58.163023Z"
+   checksum="ba84fd74516b15265092094b07016600"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="668"
+   name="tiger.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-22T11:20:52.457610Z"
+   checksum="bab15387a1d43f879ce11a04513fa902"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+<entry
+   committed-rev="592"
+   name="ve.html"
+   text-time="2006-07-05T14:27:38.000000Z"
+   committed-date="2006-06-15T12:45:14.027952Z"
+   checksum="881b0d71ed2600c257d8ede9b048da9b"
+   last-author="euzuro"
+   kind="file"
+   prop-time="2006-07-05T14:27:38.000000Z"/>
+</wc-entries>

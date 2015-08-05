@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="685"
+   name=""
+   committed-date="2006-06-22T19:28:31.951707Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/lib/OpenLayers/Control"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="657"
+   name="LayerSwitcher.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="f53f7c460fa5f296e9a7e17c1c747393"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="657"
+   name="KeyboardDefaults.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="c847f49d6d4687af1730f358e0abe6bd"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="657"
+   name="PanZoomBar.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="667dd1e80b90825dda300c54ca6d03e8"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="685"
+   name="MouseToolbar.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-22T19:28:31.951707Z"
+   checksum="0ecdf6c73ed763dfaeb37dba7b8608d5"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="685"
+   name="MouseDefaults.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-22T19:28:31.951707Z"
+   checksum="52c924165eda13c7b5814950590be0c8"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="663"
+   name="PanZoom.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T17:12:19.006514Z"
+   checksum="36babaa90b3f4d356dae8761da99074c"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+</wc-entries>

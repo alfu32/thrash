@@ -1,0 +1,31 @@
+.CalendarWidget{
+	/*position:absolute;*/
+	zoom:1;
+	opacity:1;
+	background-color:#FFF;
+	padding:15px;
+	margin-top:15px;
+	border:1px solid #2AA;
+	width:290px;
+	height:232px;
+}
+.CalendarWidget .DayButton{
+	margin:4px;
+	font-size:9px;
+	zoom:1;
+}
+.CalendarWidget hr{
+	margin:2px;
+	padding:0px;
+	zoom:1;
+}
+.CalendarWidget .Day{
+	width:34px;
+	background-color:#C0C0EF;
+	display:inline-block;
+	zoom:1;
+}
+.CalendarWidget div.Message{
+	display:inline-block;
+	zoom:1;
+}

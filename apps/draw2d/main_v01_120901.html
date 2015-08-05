@@ -1,0 +1,883 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>draw 2d demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+    <!--META HTTP-EQUIV="REFRESH" CONTENT="5"-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.7.1/dropbox.min.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.class/class.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.std/std.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.std/stdstr.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.std/stdui.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.canvas/Color.js"></script>
+
+    <script type="text/javascript" src="../../_libjs/lib.benchmark/Meter.js"></script>
+
+    <script type="text/javascript" src="../../_libjs/lib.input/KeyBuffer.js"></script>
+
+    <script type="text/javascript" src="../../_libjs/lib.Tables/Table.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.Collections/List.js"></script>
+
+    <script type="text/javascript" src="../../_libjs/lib.geometry/Matrix.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.geometry/Vector.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.geometry/Rectangle.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.geometry/Shape.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.geometry/FreeVector.js"></script>
+    <script type="text/javascript" src="../../_libjs/lib.geometry/Viewport.js"></script>
+
+
+    <script type="text/javascript" src="../../_libjs/VC.js"></script>
+
+    <script type="text/javascript" src="../../_libjs/lib.canvas/CanvasLayer.js"></script>
+    <style type="text/css">
+        ::-webkit-scrollbar {
+            padding-top:4px;
+            padding-bottom:4px;
+            width:8px;
+            background:rgba(0,0,0,0.1);
+        }
+        ::-webkit-scrollbar-track {
+            background:rgba(0,0,0,0.1);
+            margin-top:4px;
+            margin-bottom:4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            width:4px;
+            background: #5b80ab;
+            border-radius: 2px;
+            -webkit-box-shadow:0px 0px 6px rgba(0,0,0,0.5);
+        }
+        #prototypes{
+            display:none;
+        }
+        .ios_button{
+            position: relative;
+            height: 26px;
+            width: 45px;
+            background: #000;
+        }
+        div.ios_button div {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #808080;
+            position: absolute;
+            -webkit-transform: rotate(45deg);
+            top: 4px;
+            left: -9px;
+        }
+    </style>
+    <style type="text/css">
+            ._button{
+            display:inline-block;
+            font-weight: 500;
+            color:white;
+            text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+            border-radius: 5px;
+            box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 2px rgba(0,0,0, 0.4);
+
+            background: #6988af; /* Old browsers */
+            background: -moz-linear-gradient(top,  #6988af 0%, #4b6b91 50%, #446184 50%, #456385 100%); /* FF3.6+ */
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#6988af), color-stop(50%,#4b6b91), color-stop(50%,#446184), color-stop(100%,#456385)); /* Chrome,Safari4+ */
+            background: -webkit-linear-gradient(top,  #6988af 0%,#4b6b91 50%,#446184 50%,#456385 100%); /* Chrome10+,Safari5.1+ */
+            background: -o-linear-gradient(top,  #6988af 0%,#4b6b91 50%,#446184 50%,#456385 100%); /* Opera 11.10+ */
+            background: -ms-linear-gradient(top,  #6988af 0%,#4b6b91 50%,#446184 50%,#456385 100%); /* IE10+ */
+            background: linear-gradient(to bottom,  #6988af 0%,#4b6b91 50%,#446184 50%,#456385 100%); /* W3C */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6988af', endColorstr='#456385',GradientType=0 ); /* IE6-9 */
+
+            font-size: 12px;
+            cursor: pointer;
+            padding:5px;
+            padding-top:9px;
+            padding-bottom:8px;
+            opacity:1;
+
+        }
+        ._button_disabled{
+            display:inline-block;
+            font-weight: 500;
+            color:white;
+            text-shadow: 0px -1px 0px rgba(0,0,0,0.4);
+            border-radius: 5px;
+            box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 2px rgba(0,0,0, 0.4);
+
+            background: #b5b3bd;
+            font-size: 12px;
+            cursor: default;
+            padding:5px;
+            padding-top:9px;
+            padding-bottom:8px;
+            opacity:1;
+
+        }
+    </style>
+    <style type="text/css">
+        table,tbody,tr,td{
+            border-collapse: collapse;
+            margin:0px;
+            padding: 0px;
+        }
+        body{
+            font-family: Calibri,Consolas,Droid sans-serif;
+        }
+        #main{
+            position: absolute;
+            top:0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+        }
+
+        #toolsPanel,#layerPanel,#leftPanel,#leftPanelCell{
+            background-color: #b2bbca;
+            background-image: linear-gradient(top, #b0bccd, #889bb3 50%, #8195af 51%, #6d84a2);
+            background-clip: padding-box;
+            background-size: 1px 100%;
+            background-repeat: repeat-x;
+            border-top: 1px solid #cdd5df;
+            border-bottom: 1px solid #2e3744;
+            width: 300px;
+            height: 100%;
+        }
+        #leftPanelCell:hover{
+            width: 300px;
+        }
+        .button{
+            background: #FFFFFF;
+            cursor: pointer;
+            padding:12px;
+            border-top: 1px solid grey;
+        }
+        .button:hover{
+            background: #dbe8f6;
+        }
+        .button_selected{
+            background: #dbe8f6;
+            box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 2px rgba(0,0,0, 0.3);
+            cursor: pointer;
+            padding:12px;
+            border-top: 1px solid grey;
+        }
+        #centerPanel{
+            background-color: #000000;
+        }
+        .mainCanvas{
+            cursor:none;
+            position:absolute;
+            top:0%;
+            left:300px;
+        }
+        .textBlock{
+            display:inline-block;
+        }
+        #layerList,#layerList > tbody{
+        }
+        #layerListItem{
+            display: none;
+        }
+        .layerListItem{
+            background: #ffffff;
+        }
+        .layerListItem_selected{
+            background: #dbe8f6;
+            box-shadow: 0 1px 0 rgba(255,255,255, 0.25), inset 0 1px 2px rgba(0,0,0, 0.3);
+        }
+        .layerListItem:hover{
+            background: #dbe8f6;
+        }
+        .layerListItem td{
+            border-collapse: separate;
+            border-top: 1px solid grey;
+        }
+        .layerListItem_name{
+            border-top: 1px solid grey;
+            width:100%;
+            cursor:pointer;
+        }
+        .layerListItem_show{
+            border-top: 1px solid grey;
+            cursor:pointer;
+        }
+        .layerListItem_properties{
+            opacity:1;
+            border-top: 1px solid grey;
+            cursor:pointer;
+        }
+        .layerListItem_properties:hover{
+            opacity:1;
+            border-top: 1px solid grey;
+            cursor:pointer;
+        }
+        .smallToast{
+            color: #7e97bc;
+            background: rgba(0, 199, 149, 0.41);
+            border:0px dashed rgb(251, 249, 255);
+            font-size: 12px;
+            position:absolute;
+            padding:5px;
+            top:20px;
+            left: 40px;
+        }
+        .onOffButton{
+            margin-right:12px;
+            box-shadow: inset 0px 0px 2px #5B80AB;
+            height:18px;
+            width:56px;
+            background-image: url(../../_libimg/ios/checkbox-background.png);
+            border-radius: 9px;
+            background-size: 99px 18px;
+        }
+    </style>
+</head>
+<body>
+<table id=main>
+    <tbody>
+    <tr>
+        <td id=leftPanelCell>
+            <div id="leftPanel">
+
+            </div>
+        </td>
+        <td id=centerPanel>
+        </td>
+        <td id=rightPanelCell>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div id="prototypes">
+    <div id=layerPanel>
+    </div>
+    <div id=toolsPanel>
+    </div>
+    <div id="smallToast" class="smallToast">
+    </div>
+    <canvas id="mainCanvas" style="display:none"></canvas>
+    <table id="layerList">
+        <tbody>
+        <tr class="layerListItem" id="layerListItem">
+            <td class="layerListItem_properties"><img src="../../_libimg/ios/IL_ArrowLine.png" style="height:29px;margin:5px"/></td>
+            <td class="layerListItem_name">
+            </td>
+            <td class="layerListItem_show">
+                <div class="onOffButton">
+
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript" src="../../_libjs/lib.widgets/DetailedCellViewController.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.widgets/ListItemView.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.widgets/ButtonView.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.widgets/ToolbarController.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.widgets/FunctionListController.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.frameworks/DropboxController.js"></script>
+
+<script type="text/javascript" src="../../_libjs/lib.controllers/DialogViewControler.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.controllers/FileDialogController.js"></script>
+
+<script type="text/javascript" src="../../_libjs/lib.widgets/PropertiesEditDialog.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.controllers/ButtonController.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.controllers/HorizontalListController.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.controllers/FiniteToolController.js"></script>
+
+<script type="text/javascript" src="../../_libjs/lib.applications/fragments/LayerManager.js"></script>
+
+<script type="text/javascript" src="../../_libjs/lib.geometry/Symbols.js"></script>
+<script type="text/javascript" src="../../_libjs/lib.canvas/Selector.js"></script>
+<script language="JavaScript" type="text/javascript">
+
+function Toast(){
+    var toast=new ViewController();
+    toast.initFromPrototype("smallToast");
+    this.show=function(){
+        toast.view.style.display=""
+    }
+    this.hide=function(){
+        toast.view.style.display="none"
+    }
+    this.set=function(x,y){
+        toast.view.style.left=(x)+"px";
+        toast.view.style.top=(y)+"px";
+    }
+    this.Text=function(text){
+        if(text==undefined)return toast.view.innerHTML;
+        toast.view.innerHTML=text;
+    }
+    this.View=function(view){
+        if(view==undefined){
+            return toast.view;
+        }else{
+            toast.view=view;
+        }
+    }
+    this.hide();
+}
+toast=new Toast();
+toast.set=function(x,y){
+    var dx=(x<0)?320:(x>(viewport.screen.v1.x))?(viewport.screen.v1.x-20):(x>(viewport.screen.v1.x-40))?(-20+300+x):(20+300+x);
+    var dy=(y<0)?20:(y>(viewport.screen.v1.y))?(viewport.screen.v1.y-20):(x>(viewport.screen.v1.y-40))?(-20+y):(20+y);
+    toast.View().style.left=(dx)+"px";
+    toast.View().style.top=(dy)+"px";
+}
+toast2=new Toast();
+toast2.set(300,0);
+toast2.show();
+
+numericValue_input_ended=function(txt){
+    if(input==null)return;
+    var d=parseFloat(txt),C;
+    if(!isNaN(d)){
+        if(input!=null){
+            var sk=viewport.getScale()
+            var p=new FreeVector(input,layerManager.coords);
+            var q= d/ p.Length();
+            C=input.clone().add(layerManager.coords.clone().sub(input).multiplyScalar(q))
+        }
+        var cc=layerManager.modelToMouse(C);
+        //cursor.set(cc.x, cc.y);
+        currentTool.onClick(event,C);
+        feedbackLayer.draw(false);
+        layer1.draw(true);
+        layerManager.currentLayer.draw(false);
+    }
+    toast.hide();
+}
+numericValue_input=function(txt){
+    if(input==null)return;
+    var cc=cursor.position;
+    toast.Text("input: "+txt+" ->error: not numeric");
+    toast.set(cc.x,cc.y);
+    toast.show();
+    var d=parseFloat(txt),C;
+    if(!isNaN(d)){
+        if(input!=null){
+            var sk=viewport.getScale()
+            var p=new FreeVector(input,layerManager.coords);
+            var q= d/ p.Length();
+            C=input.clone().add(layerManager.coords.clone().sub(input).multiplyScalar(q))
+        }
+        var cc=layerManager.modelToMouse(C);
+        toast.Text("delta: "+txt+"cm");
+        //cursor.set(cc.x, cc.y);
+        toast.set(cc.x,cc.y);
+        toast.show();
+        currentTool.onMove(event,C);
+        feedbackLayer.draw(false);
+        layer1.draw(true);
+        layerManager.currentLayer.draw(false);
+
+    }
+}
+var keyBuffer=new KeyBuffer(document.body,numericValue_input,numericValue_input_ended)
+    var input=null;
+    currentShape=null;
+    dlg=null;
+
+    var viewport=new Viewport(new Transform2D().ScaleMatrix(1,1),new Transform2D().ScaleMatrix(1,1));
+    viewport.screen={
+        v0:new Vector(0,0),
+        v1:new Vector(document.width-300,document.height)
+    }
+    var screenViewport=new Viewport(new Transform2D().set(1,0,0,1,.5,.5),new Transform2D().set(1,0,0,1,.5,.5));
+    screenViewport.screen={
+        v0:new Vector(0,0),
+        v1:new Vector(document.width-300,document.height)
+    }
+    var feedbackViewport=new Viewport(new Transform2D().set(1,0,0,1,.5,.5),new Transform2D().set(1,0,0,1,.5,.5));
+    feedbackViewport.screen={
+        v0:new Vector(0,0),
+        v1:new Vector(document.width-300,document.height)
+    }
+
+    var feedbackLayer=new CanvasLayer("mainCanvas",feedbackViewport,document.getElementById("centerPanel"));
+    feedbackLayer.setStyle({shadowBlur:2,shadowColor:"#000",fillStyle:"#F00",strokeStyle:"#FF0",lineWidth:1,lineJoin:CanvasLayer.LINE_JOIN.round});
+feedbackLayer.isScaledCanvas=false;
+// LayerManagerConstructor
+    layerManager=new LayerManager(viewport,screenViewport,feedbackViewport,feedbackLayer);
+    layerInit=[
+        {color:"#FFAA00",background:"#EEAA00",name:"construction grid",weight:0.05,textAlign:CanvasLayer.TEXT_ALIGN.start}
+        ,{color:"#FF0000",background:"#EE0000",name:"major grid",weight:0.1,textAlign:CanvasLayer.TEXT_ALIGN.start}
+        ,{color:"#FFFF77",background:"#EEEE88",name:"internal walls",weight:0.25,textAlign:CanvasLayer.TEXT_ALIGN.start}
+        ,{color:"#FFFF00",background:"#EEEE00",name:"external walls",weight:0.35,textAlign:CanvasLayer.TEXT_ALIGN.start}
+        ,{color:"#FF7700",background:"#EE8800",name:"structural concrete",weight:0.5,textAlign:CanvasLayer.TEXT_ALIGN.start}
+        ,{color:"#77FF00",background:"#88EE00",name:"doors",weight:0.18,textAlign:CanvasLayer.TEXT_ALIGN.start}
+        ,{color:"#7700FF",background:"#8800EE",name:"windows",weight:0.18,textAlign:CanvasLayer.TEXT_ALIGN.start}
+        ,{color:"#FFFFFF",background:"#EEEEEE",name:"dimensions",weight:0.15,textAlign:CanvasLayer.TEXT_ALIGN.center}
+    ];
+/*layerInit=[
+    {color:"800",background:"800",name:"construction grid",weight:0.05,textAlign:CanvasLayer.TEXT_ALIGN.start}
+    ,{color:"840",background:"840",name:"major grid",weight:0.1,textAlign:CanvasLayer.TEXT_ALIGN.start}
+    ,{color:"221",background:"221",name:"internal walls",weight:0.25,textAlign:CanvasLayer.TEXT_ALIGN.start}
+    ,{color:"220",background:"220",name:"external walls",weight:0.35,textAlign:CanvasLayer.TEXT_ALIGN.start}
+    ,{color:"210",background:"210",name:"structural concrete",weight:0.5,textAlign:CanvasLayer.TEXT_ALIGN.start}
+    ,{color:"120",background:"120",name:"doors",weight:0.18,textAlign:CanvasLayer.TEXT_ALIGN.start}
+    ,{color:"102",background:"102",name:"windows",weight:0.18,textAlign:CanvasLayer.TEXT_ALIGN.start}
+    ,{color:"222",background:"222",name:"dimensions",weight:0.15,textAlign:CanvasLayer.TEXT_ALIGN.center}
+];*/
+    for(var i=0;i<layerInit.length;i++){
+        var layer=new CanvasLayer("mainCanvas",viewport,document.getElementById("centerPanel"),feedbackLayer.canvasController.view)
+                .setStyle({
+                    lineCap:CanvasLayer.LINE_CAP.round,
+                    lineJoin:CanvasLayer.LINE_JOIN.round,
+                    textAlign:layerInit.textAlign
+                });
+        var fc=new Color();fc.setFromDString(layerInit[i].background);
+        layer.fillColor=fc;
+        var sc=new Color();sc.setFromDString(layerInit[i].color);
+        layer.strokeColor=sc;
+        layer.setFillStyle(layerInit[i].background);
+        layer.setStrokeStyle(layerInit[i].color);
+        layer.setFillAlpha(.3);
+        layer.setStrokeAlpha(.99);
+        layer.setLineWidth(layerInit[i].weight);
+        layer.name=layerInit[i].name;
+        layer.isScaledCanvas=true;
+        layerManager.addChild(layer);
+    }
+    layerManager.currentLayer=layerManager.children[1];
+    layerManager.currentLayer.selected=true;
+    layerManager.layout();
+// LayerManager Constructor End
+//
+
+    var layer1=new CanvasLayer("mainCanvas",screenViewport,document.getElementById("centerPanel"));
+    layer1.isScaledCanvas=false;
+    layer1.setStyle({fillStyle:"#EEE",strokeStyle:"#FFFFFF",lineWidth:1,lineJoin:CanvasLayer.LINE_JOIN.round});
+    snapSymbols={
+        end:function(x,y){return new EndPoint(x,y)},
+        mid:function(x,y){return new MidPoint(x,y)},
+        center:function(x,y){return new IntersectPoint(x,y)},
+        intersect:function(x,y){return new IntersectPoint(x,y)},
+        near:function(x,y){return new NearPoint(x,y)},
+        perpendicular:function(x,y){return new PerpPoint(x,y)},
+        outside:function(x,y){return new NearPointOutside(x,y)}
+    }
+    symbol=new CoordinatesSymbol(6,50);
+    symbol.set(0,0);
+    feedbackLayer.shapes.push(symbol);
+    cursor=new Cursor(12,30);
+    layer1.shapes.push(cursor);
+    var mousewheel_listener=function(event){
+        var d=Math.pow(1.4,(event.wheelDeltaY/120)||(-event.detail));
+        var mouse=new Vector(event.clientX-300,event.clientY);
+        //log(mouse);
+        layerManager.zoomAboutPoint(mouse,d);
+        feedbackLayer.draw(false);
+        layer1.draw(true);
+    }
+meters=[];
+timeMeasure=new TimeMeasure();
+timeMeasure.onMeasure=function(dx,dt){
+    toast2.Text("speed:"+(dx/dt)+" px/s");
+}
+    var touch_start=function(event) {
+        isTouch=true;
+        isTouchStart=true;
+        isTouchMove=false;
+        isTouchEnd=false;
+
+        //timeMeasure.measure(event.targetTouches[0].x)
+        timeMeasure.measure(event.targetTouches.length)
+        event.preventDefault()
+    }
+    var touch_move=function(event){
+        isTouchMove=true;
+        isTouchStart=false;
+        //timeMeasure.measure(event.targetTouches[0].x)
+        timeMeasure.measure(event.targetTouches.length)
+        event.preventDefault()
+    }
+    var touch_end=function(event) {
+        log("touch_end");
+
+        //timeMeasure.measure(event.targetTouches[0].x)
+        timeMeasure.measure(event.targetTouches.length)
+        isTouchStart=false;
+        isTouchEnd=true;
+        isTouchMove=false;
+        event.preventDefault()
+    }
+
+    var mouse_move=function(event){
+        var sk=viewport.getScale();
+        var dist=10/sk;
+        var mouse=new Vector(event.pageX-300,event.pageY);
+        var pointInModel=viewport.mouseToModel(mouse);
+        //var feed="x:"+LayerManager.dynamicGrid(pointInModel.x,sk)+",y:"+LayerManager.dynamicGrid(pointInModel.y,sk);
+        var feed="<table><tbody><tr><td>x:"+StringUtils.roundWithDecimals(pointInModel.x,2)+"</td><td>,y:"+StringUtils.roundWithDecimals(pointInModel.y,2)+"</td></tr>";
+        var snapPoints=[];var sp=[];
+        feedbackLayer.shapes=[];
+        feedbackLayer.shapes.push(symbol);
+        feedbackLayer.shapes=feedbackLayer.shapes.concat(selector.points);
+        var v;
+        layerManager.coords=null;
+        for(var i=0;i<layerManager.children.length;i++){
+            for(var j=0;j<layerManager.children[i].shapes.length;j++){
+                if(!layerManager.children[i].visible)continue;
+                var shape=layerManager.children[i].shapes[j];
+                if(shape==currentShape)continue;
+                if(selector.isSelected(shape))continue;
+                snapPoints=snapPoints.concat(shape.getSnapPoint(pointInModel,dist));
+                snapPoints=snapPoints.concat(shape.getNearPoint(pointInModel,dist));
+                if(currentShape!=null && input!=null){
+                    var psp=shape.getPerpendicularPoint(input,pointInModel,dist);
+                    if(psp.length==0)continue;
+                    else{
+                        snapPoints=snapPoints.concat(psp);
+                    }
+                }
+            }
+        }
+        snapPoints.sort(function(a,b){return Shape.INTERSECTION_PRIORITY[a.type]*a.point.module()- Shape.INTERSECTION_PRIORITY[b.type]*b.point.module()})
+
+        if(snapPoints.length>0){
+            v=(snapPoints[0].point);
+            layerManager.coords= v.clone();
+            var sh=snapSymbols[snapPoints[0].type](v.x,v.y);
+            //sh.size=sh.size/sk;
+            feedbackLayer.shapes.push(sh);
+        }else
+
+        if(input!=null){
+            //feed+="<br>dx:"+LayerManager.dynamicGrid(pointInModel.x-input.x,sk)+",dy:"+LayerManager.dynamicGrid(pointInModel.y-input.y,sk);
+            feed+="<tr><td>dx:"+StringUtils.roundWithDecimals(pointInModel.x-input.x,2)+"</td><td>,dy:"+StringUtils.roundWithDecimals(pointInModel.y-input.y,2)+"</td></tr>";
+            if(Math.abs(input.x-pointInModel.x)<dist){
+                layerManager.coords=new Vector(input.x,pointInModel.y);
+            }
+            if(Math.abs(input.y-pointInModel.y)<dist){
+                layerManager.coords=new Vector(pointInModel.x,input.y);
+            }
+        }
+        if(layerManager.coords==null){
+            //layerManager.coords=new Vector(LayerManager.dynamicGrid(pointInModel.x,sk),LayerManager.dynamicGrid(pointInModel.y,sk));
+            layerManager.coords=pointInModel;//new Vector(LayerManager.dynamicGrid(pointInModel.x,sk),LayerManager.dynamicGrid(pointInModel.y,sk));
+        }
+        cursor.set(mouse.x,mouse.y);
+        feedbackLayer.draw(false);
+        if(currentShape!=null)currentTool.onMove(event,layerManager.coords);
+        layerManager.currentLayer.draw(false);
+        layer1.draw(true);
+        feed+="</tbody></table>"
+        toast2.Text(feed);
+    }
+    var mouse_up=function(event){
+        currentTool.onClick(event,layerManager.coords);
+    }
+    var mouseClick=function(event){
+        currentTool.onClick(event,layerManager.coords);
+    }
+    //var firstentry=function(event){
+        //layerManager.zoomAboutPoint(new Vector(0,0),1);
+        //this.removeEventListener("mouseover",firstentry);
+    //}
+    layer1.canvasController.getView().addEventListener("mousewheel",mousewheel_listener);
+    layer1.canvasController.getView().addEventListener("DOMMouseScroll ",mousewheel_listener);
+    layer1.canvasController.getView().addEventListener("touchstart",touch_start);
+    layer1.canvasController.getView().addEventListener("touchmove",touch_move);
+    layer1.canvasController.getView().addEventListener("touchend",touch_end);
+
+    layer1.canvasController.getView().addEventListener("mousemove",mouse_move);
+    layer1.canvasController.getView().addEventListener("mouseup",mouse_up);
+    //layer1.canvasController.getView().addEventListener("click",mouseClick);
+
+
+
+    toolControllers=[
+        lineToolController=new FiniteToolController("line",[
+            function(event,v){
+                input= v.clone();
+                currentShape=new Line(input,v);
+                layerManager.currentLayer.shapes.push(currentShape);
+                layerManager.currentLayer.draw(false);
+            },
+            function(event,v){
+                currentShape.set(input,v);
+                var a=currentShape;
+                layerManager.setIntersectPoints(a);
+                input=null;
+                currentShape=null;
+            }
+        ],[
+            function(event,v){
+                currentShape.set(input,v);
+            }
+        ]),
+        doubleLineToolController=new FiniteToolController("double line",[
+            function(event,v){
+                input= v.clone();
+                currentShape=new DoubleLine(input,v);
+                currentShape.setWidth(layerManager.currentLayer.getDoubleLineWidth());
+                layerManager.currentLayer.shapes.push(currentShape);
+                layerManager.currentLayer.draw(false);
+            },
+            function(event,v){
+                currentShape.set(input,v);
+                var a=currentShape
+                layerManager.setIntersectPoints(a);
+                input=null;
+                currentShape=null;
+            }
+        ],[
+            function(event,v){
+                currentShape.set(input,v);
+            }
+        ]),
+        rectangleToolController=new FiniteToolController("rectangle",[
+            function(event,v){
+                input=new Vector(v.x, v.y);
+                currentShape=new Rect(input,v);
+                layerManager.currentLayer.shapes.push(currentShape);
+                layerManager.currentLayer.draw(false);
+            },
+            function(event,v){
+                currentShape.set(input,v);
+                layerManager.setIntersectPoints(currentShape);
+                input=null;
+                currentShape=null;
+            }
+        ],[
+            function(event,v){
+                currentShape.set(input,v);
+            }
+        ]),
+        pointToolController=new FiniteToolController("point",[
+            function(event,v){
+                currentShape=new Point();
+                currentShape.set(v.x, v.y);
+                layerManager.currentLayer.shapes.push(currentShape);
+                input=null;
+                currentShape=null
+                layerManager.currentLayer.draw(false);
+            }
+        ],[
+            function(event,v){
+                currentShape.set(input,v);
+            }
+        ]),
+        dimensionToolController=new FiniteToolController("dimension",[
+            function(event,v){
+                input= v.clone();
+                currentShape=new Dimension(input, v.clone());
+                layerManager.currentLayer.shapes.push(currentShape);
+                layerManager.currentLayer.draw(false);
+            },
+            function(event,v){
+                input2= v.clone();
+                currentShape.set(input,input2);
+                layerManager.currentLayer.draw(false);
+            },
+            function(event,v){
+                //log("setIntersectPoints",currentShape.segments.length,currentShape);
+                //var a=currentShape
+                //layerManager.setIntersectPoints(a);
+                currentShape.set(input,input2,v);
+                input2=null;
+                input=null;
+                currentShape=null;
+            }
+        ],[
+            function(event,v){
+                currentShape.set(input,v);
+            },
+            function(event,v){
+                currentShape.set(input,input2,v);
+            }
+        ])
+    ];
+    var selector=new Selector(feedbackLayer);
+    modifyControllers=[
+        selectToolController=new FiniteToolController("select",[
+            function(event,v){
+                input= v.clone();
+                var v1=input.clone();
+                currentShape=selector;
+                selector.clear()
+                currentShape.set(input,v1);
+                currentShape.show();
+                layerManager.currentLayer.draw(false);
+            },
+            function(event,v){
+                currentShape.getSelection(layerManager.children);
+                feedbackLayer.draw(true)
+                currentShape.hide();
+                input=null;
+                currentShape=null;
+                layer1.draw(true);
+            }
+        ],[
+            function(event,v){
+                currentShape.set(input,v);
+            }
+        ]),
+        new FiniteToolController("move",[
+            function(event,v){
+                input= v.clone();
+                layer1.shapes[1]=new Line();
+                layer1.shapes[1].set(layerManager.modelToMouse(input),layerManager.modelToMouse(v));
+                if(selector.selection.length>0){
+                    currentShape={set:function(dx,dy){
+                        for(var i=0;i<selector.selection.length;i++){
+                            selector.selection[i].x=selector.initialSelection[i].x+dx;
+                            selector.selection[i].y=selector.initialSelection[i].y+dy;
+                            selector.points[i].set(selector.selection[i]);
+                            selector.points[i].shape.setBbox();
+                        }
+                        var vector=layerManager.modelToMouse(new Vector(dx+input.x,dy+input.y));
+                        layer1.shapes[1].set(layerManager.modelToMouse(input),vector);
+                        layerManager.regen();
+                    }
+                    };
+                }
+            },
+            function(event,v){
+                var d=v.clone().sub(input);
+                for(var i=0;i<selector.selection.length;i++){
+                    selector.initialSelection[i].x=selector.initialSelection[i].x+ d.x;
+                    selector.initialSelection[i].y=selector.initialSelection[i].y+ d.y;
+                }
+                //
+                layer1.shapes.length=1;
+                input=null;
+                currentShape=null;
+                layerManager.regenIntersections();
+                toolbarModify.setTo(selectToolController);
+                layerManager.regen();
+            }
+        ],[function(event,v){
+                currentShape.set(v.x-input.x, v.y-input.y);
+            }]),
+        new FiniteToolController("copy",[
+            function(event,v){
+                log("copy","first point : ",v)
+            },
+            function(event,v){
+                log("copy","second point : ",v)
+            }
+        ]),
+        new FiniteToolController("rotate",[
+            function(event,v){
+                log("rotate","first point : ",v)
+            },
+            function(event,v){
+                log("rotate","second point : ",v)
+            },
+            function(event,v){
+                log("rotate","third point : ",v)
+            }
+        ]),
+        new FiniteToolController("scale",[
+            function(event,v){
+                log("scale","first point : ",v)
+            },
+            function(event,v){
+                log("scale","second point : ",v)
+            },
+            function(event,v){
+                log("scale","third point : ",v)
+            }
+        ]),
+        new FiniteToolController("stretch",[
+            function(event,v){
+                log("stretch","first point : ",v)
+            },
+            function(event,v){
+                log("stretch","second point : ",v)
+            },
+            function(event,v){
+                log("stretch","third point : ",v)
+            }
+        ]),
+        new FiniteToolController("delete",[
+            function(event,v){
+                log("delete","first point : ",v)
+            }
+        ]),
+        new FiniteToolController("trim",[
+            function(event,v){
+                log("trim","first point : ",v)
+            },
+            function(event,v){
+                log("trim","second point : ",v)
+            },
+            function(event,v){
+                log("trim","third point : ",v)
+            }
+        ]),
+        new FiniteToolController("extend",[
+            function(event,v){
+                log("extend","first point : ",v)
+            },
+            function(event,v){
+                log("extend","second point : ",v)
+            }
+        ])
+    ];
+    editControllers=[
+                new ButtonController("undo",
+                        function(event,extras){
+                            selection=[];
+                            input2=null;
+                            input=null;
+                            currentShape=null;
+                            if(layerManager.currentLayer.shapes.length)layerManager.currentLayer.shapes.length-=1;
+                            layerManager.regenIntersections();
+                            layerManager.regen();
+                        }),
+                new ButtonController("reset zoom",
+                        function(event,extras){
+                            layerManager.setScale(1);
+                            layerManager.setTranslation(new Vector());
+                            layerManager.regen();
+                            feedbackLayer.draw(false);
+                            layer1.draw(true);
+                        })
+    ]
+dropboxController=new DropboxController();
+var fileDialog;
+
+//fileDialog.hide();
+fileControllers=[
+    new ButtonController("save...",
+            function(event,extras){
+                log(JSON.stringify(layerManager.serialize()));
+                log("TODO serialize to dxf")
+            }),
+    new ButtonController("open...",
+            function(event,extras){
+                log("TODO deserialize from dxf")
+            }),
+    new ButtonController("save pdf",
+            function(event,extras){
+                log("TODO serialize to dxf")
+            }),
+    new ButtonController("open pdf",
+            function(event,extras){
+                log("TODO deserialize from dxf")
+            })
+]
+
+
+    fileManager=new FunctionListController(fileControllers);
+    toolbarDraw=new ToolbarController(toolControllers);
+    toolbarModify=new ToolbarController(modifyControllers);
+    toolbarEdit=new FunctionListController(editControllers);
+application={};
+application.layerManager=layerManager;
+    var panel=new HorizontalListController(document.getElementById("leftPanel"),[
+        {name:"File",controller:fileManager},
+        {name:"Edit",controller:toolbarEdit},
+        {name:"Classes",controller:layerManager},
+        {name:"Draw",controller:toolbarDraw},
+        {name:"Modify",controller:toolbarModify}
+    ])
+panel.forward().forward()
+
+</script>
+</html>

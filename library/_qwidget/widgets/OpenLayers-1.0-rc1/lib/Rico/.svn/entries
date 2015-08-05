@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="345"
+   name=""
+   committed-date="2006-05-25T01:11:42.013132Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/lib/Rico"
+   last-author="euzuro"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="345"
+   name="Corner.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-05-25T01:11:42.013132Z"
+   checksum="cf7544468c6aa7ea859658832ad7a25b"
+   last-author="euzuro"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="139"
+   name="Color.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-05-18T12:42:38.852222Z"
+   checksum="f96d395c33fc6c8eb2c5898d4a8c7a58"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+</wc-entries>

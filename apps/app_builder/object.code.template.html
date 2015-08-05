@@ -1,0 +1,88 @@
+<style>
+    .ubct_text-layer {
+        color: black;
+        font: inherit !important;
+    }
+
+    .ubct_content {
+        cursor: text;
+    }
+
+    .ubct_layer {
+        z-index: 1;
+        position: absolute;
+        overflow: hidden;
+        white-space: nowrap;
+        height: 100%;
+        width: 100%;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
+    .ubct_line {
+        white-space: nowrap;
+    }
+
+    .ubct_operator {
+        color: rgb(104, 118, 135);
+    }
+
+    .ubct_support.ubct_function {
+        color: rgb(60, 76, 114);
+    }
+
+    .ubct_language {
+        color: rgb(88, 92, 246);
+    }
+
+    .ubct_variable {
+        color: rgb(49, 132, 149);
+    }
+
+    .ubct_keyword {
+        color: blue;
+    }
+
+    .ubct_support.ubct_function {
+        color: rgb(60, 76, 114);
+    }
+
+    .ubct_entity.ubct_name.ubct_function {
+        color: rgb(0, 0, 162);
+    }
+
+    .ubct_type {
+        color: blue
+    }
+
+    .ubct_string {
+        color: rgb(3, 106, 7);
+    }
+
+    .ubct_variable {
+        color: rgb(49, 132, 149);
+    }
+</style>
+<div class="ubct_layer ubct_text-layer" style="padding: 0px 4px;">
+    <div class="ubct_line" style="height:15px"><span class="ubct_storage ubct_type">var</span>&nbsp;<span
+            class="ubct_identifier">##NAME##</span><span class="ubct_keyword ubct_operator">=</span><span
+            class="ubct_paren ubct_lparen">(</span><span class="ubct_storage ubct_type">function</span><span
+            class="ubct_paren ubct_lparen">(</span><span class="ubct_paren ubct_rparen">)</span><span
+            class="ubct_paren ubct_lparen">{</span></div>
+    <div class="ubct_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ubct_storage ubct_type">var</span>&nbsp;<span
+            class="ubct_identifier">CLASS</span><span class="ubct_keyword ubct_operator">=</span><span
+            class="ubct_storage ubct_type">function</span>&nbsp;<span class="ubct_entity ubct_name ubct_function">##NAME##</span><span
+            class="ubct_paren ubct_lparen">(</span><span class="ubct_paren ubct_rparen">)</span><span
+            class="ubct_paren ubct_lparen">{</span></div>
+    <div class="ubct_line" style="height:15px"><span class="ubct_indent-guide">&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span
+            class="ubct_identifier">##CODE##</span></div>
+    <div class="ubct_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ubct_paren ubct_rparen">}</span><span
+            class="ubct_punctuation ubct_operator">;</span></div>
+    <div class="ubct_line" style="height:15px">&nbsp;&nbsp;&nbsp;&nbsp;<span class="ubct_keyword">return</span>&nbsp;<span
+            class="ubct_identifier">CLASS</span><span class="ubct_punctuation ubct_operator">;</span></div>
+    <div class="ubct_line" style="height:15px"><span class="ubct_paren ubct_rparen">})</span><span
+            class="ubct_paren ubct_lparen">(</span><span class="ubct_paren ubct_rparen">)</span><span
+            class="ubct_punctuation ubct_operator">;</span></div>
+</div>

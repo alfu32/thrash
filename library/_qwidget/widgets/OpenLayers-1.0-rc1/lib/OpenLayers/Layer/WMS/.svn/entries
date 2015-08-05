@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="675"
+   name=""
+   committed-date="2006-06-22T15:59:23.465152Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/lib/OpenLayers/Layer/WMS"
+   last-author="crschmidt"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="675"
+   name="Untiled.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-22T15:59:23.465152Z"
+   checksum="795b66d1affbfc565640f774d496fc0f"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+</wc-entries>

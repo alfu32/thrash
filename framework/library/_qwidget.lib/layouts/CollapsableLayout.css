@@ -1,0 +1,38 @@
+.CollapsableLayout .Title{
+	background-color:#b0b0ef;
+	color:#000;
+	text-align:center;
+	font-size:24px;
+	font-style:underline;
+	padding:10px;
+	cursor:pointer;
+	background-image:url('/portail/image/expand.gif');
+	background-repeat:no-repeat;
+	background-position:100% 50%;
+	height:42px;
+	border-top:1px solid #c0c0df;
+	border-bottom:1px solid #a0a0df;
+}
+.CollapsableLayout .Title_Highlight{
+	background-color:#D0D0FE;
+	color:#333;
+	border-top:1px solid #e0e0ff;
+	border-bottom:1px solid #c0c0ef;
+}
+.CollapsableLayout .Container{
+	background:#E0E0FF;
+}
+.CollapsableLayout .Visible{
+	/*background-image:url('/portail/image/contract.gif');*/
+	background-image:url('');
+}
+.CollapsableLayout .Hidden{
+	background-image:url('/portail/image/expand.gif');
+}
+.CollapsableLayout .TopButton{
+	padding:5px;
+	float:left;
+}
+.CollapsableLayout.TitleText{
+display:inline-block;
+}

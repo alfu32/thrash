@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="561"
+   name=""
+   committed-date="2006-06-09T01:28:15.847685Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/tools"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   prop-time="2006-07-05T14:27:36.000000Z"
+   revision="883"/>
+<entry
+   committed-rev="359"
+   name="toposort.py"
+   text-time="2006-07-05T14:27:36.000000Z"
+   committed-date="2006-05-25T12:26:53.298818Z"
+   checksum="fae8888b47634927e39bf3c9bba17805"
+   last-author="follower"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+<entry
+   committed-rev="503"
+   name="jsmin.c"
+   text-time="2006-07-05T14:27:36.000000Z"
+   committed-date="2006-06-02T18:00:04.066753Z"
+   checksum="e838ef4a77668868805d7714a945cf22"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+<entry
+   committed-rev="495"
+   name="mergejs.py"
+   text-time="2006-07-05T14:27:36.000000Z"
+   committed-date="2006-06-01T12:18:07.224410Z"
+   checksum="d77d79cd0bf2cac072954c1aaffe0990"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+<entry
+   committed-rev="495"
+   name="shrinksafe.py"
+   text-time="2006-07-05T14:27:36.000000Z"
+   committed-date="2006-06-01T12:18:07.224410Z"
+   checksum="27c2ecde29f07ee669df636a990d2f5f"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+<entry
+   committed-rev="561"
+   name="jsmin.py"
+   text-time="2006-07-05T14:27:36.000000Z"
+   committed-date="2006-06-09T01:28:15.847685Z"
+   checksum="e26ee6369e20ada12876eecb605d9738"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+<entry
+   committed-rev="505"
+   name="README.txt"
+   text-time="2006-07-05T14:27:36.000000Z"
+   committed-date="2006-06-02T18:14:21.703230Z"
+   checksum="d03914f34c9223c9a40da765d1ce3b80"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+</wc-entries>

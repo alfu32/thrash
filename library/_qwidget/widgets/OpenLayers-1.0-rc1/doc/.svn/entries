@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="690"
+   name=""
+   committed-date="2006-06-22T20:10:49.441883Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/doc"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="690"
+   name="authors.txt"
+   text-time="2006-07-05T14:27:36.000000Z"
+   committed-date="2006-06-22T20:10:49.441883Z"
+   checksum="36e367d9fbf2175b60e5c94df658ea1d"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+</wc-entries>

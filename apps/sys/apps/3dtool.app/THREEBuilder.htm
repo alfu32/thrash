@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>ThreeD Builder</title>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../../base_UI.js"></script>
+		<script type="text/javascript" src="../../UI.js"></script>
+		<script type="text/javascript">
+		toggleToolbars=function(event){var ev=event||window.event,et=h.eT(ev,this);
+		if(h.cL(et)[0]=='title'){
+				var closeAll=function(t){
+				var titles=h._cls(t.parentNode.parentNode,'title');
+				//try{con.out=titles.length
+				if(titles.length)for(var j in titles){j=(typeof(titles[j])!=='object')?0:j;titles[j].nextElementSibling.style.display='none'}
+				//}catch(e){con.out=listobj(e);con.out='index '+j;con.out='total '+titles.length};
+				return true}
+					if(et.parentNode.parentNode!==utils){
+					if(closeAll(et)){h.toggle(et.nextElementSibling);//con.out=et.innerHTML
+					}
+					}else h.toggle(et.nextElementSibling);
+				}
+				}
+		listeners=
+		{
+		"click":
+			[toggleToolbars,
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='execute'){window[et.innerHTML]()}},
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='settool'){
+				currentTool=et.innerHTML}},
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='setoption'){setOption(et.innerHTML,options[et.innerHTML][0],options[et.innerHTML][1]);}}
+			],
+		"keydown":[
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='dataInput'){enabled=true}}],
+		"keyup":[
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='dataInput'){enabled=false}}]
+		}
+		listenersCanvas=
+		{
+"selectstart":[function(e){var ev=e||window.event;var et=h.eT(ev,this);return h.pD(ev)}],
+"contextmenu":[function(e){var ev=e||window.event;var et=h.eT(ev,this);return h.pD(ev)}]
+		}
+		listenersPane=
+		{"click":
+			[toggleToolbars,
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='execute'){window[et.innerHTML]()}},
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='settool'){
+				currentTool=et.innerHTML}},
+			function(e){var ev=e||window.event; et=h.eT(ev,this);if(h.cL(et)[0]=='setoption'){setOption(et.innerHTML,options[et.innerHTML][0],options[et.innerHTML][1]);}},
+			function(e){var ev=e||window.event; et=h.eT(ev,this);
+			if(h.cL(et)[1]=='library'){
+			//alert();
+			try{
+				var lib=h.cL(et)[0]=='Standard'?'standardLibrary':h.cL(et)[0]=='Local'?'localLibrary':'models';
+				var o=window[lib].objects[et.innerHTML];
+					//con.out=listobj([o,et.innerHTML,lib]);
+				if(o){
+					if(selection.objects.length)
+					{
+					geo=importObj([o],1,false)[0].geometry;
+					//con.out=listobj([o]);
+					for(var i in selection.objects)
+						{
+						//alert(i);
+						selection.objects[i].geometry=geo;
+						}
+					}
+					else
+					{
+					importObj([o],1,true);
+					//con.out=listobj([o]);
+					var ix=scene.objects.length-1;
+					selection.addObject(scene.objects[ix]);
+					input=[{x:0,y:0,z:0}];currentTool='move'
+					}
+					}
+				} catch(e){con.out="!!! Warning : "+e}
+				}
+			}
+			]
+		}
+		listenersUtils={"click":[toggleToolbars]}
+		function watchObjects(w){
+			if(w){
+			for(var i in w)
+				{
+				var c=w[i];
+				if(c.obj[c.parameter]!==c.val)
+					{
+						c.val=c.obj[c.parameter];
+						c.f(c.obj[c.parameter],c.target)
+					}
+				}
+				}
+			}
+		watchList=[]
+		</script>
+		<style type="text/css">
+			/* Turn on a 13x13 scrollbar */
+::-webkit-scrollbar {
+    width: 33px;
+    height: 33px;
+}
+ 
+::-webkit-scrollbar-button:vertical {
+    background-color: #556250;
+}
+ 
+/* Turn on single button up on top, and down on bottom */
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+    display: none;
+}
+ 
+/* Turn off the down area up on top, and up area on bottom */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement {
+    display: none;
+}
+ 
+/* Place The scroll down button at the bottom */
+::-webkit-scrollbar-button:vertical:increment {
+
+}
+ 
+/* Place The scroll up button at the up */
+::-webkit-scrollbar-button:vertical:decrement {
+    background-color: #657260;
+ 
+}
+ 
+::-webkit-scrollbar-track:vertical {
+    background-color: #657260;
+
+}
+ 
+/* Top area above thumb and below up button */
+::-webkit-scrollbar-track-piece:vertical:start {
+    
+}
+ 
+/* Bottom area below thumb and down button */
+::-webkit-scrollbar-track-piece:vertical:end {
+}
+ 
+/* Track below and above */
+::-webkit-scrollbar-track-piece {
+    background-color: #657260;
+	box-shadow: inset 2px 2px 8px rgba(0,0,0,.7);
+	box-shadow-bottom:none;
+	box-shadow-top:none;
+}
+ 
+/* The thumb itself */
+::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background-color: rgba(15,25,35,1);
+	border-radius: 12px;
+	box-shadow:2px 2px 8px rgba(0,0,0,.7);
+}
+ 
+/* Corner */
+::-webkit-scrollbar-corner:vertical {
+    background-color: #657260;
+}
+ 
+/* Resizer */
+::-webkit-scrollbar-resizer:vertical {
+    background-color: #657260;
+}
+			body {
+				font-family: Arial;
+				font-size: 12px;
+				background-color:#556250;
+				margin: 0px;
+				overflow: hidden;
+			}
+			.selector{position:absolute;background-color:rgba(88,155,88,.1)}
+			.title{cursor:default;height:1em;margin:5px;padding:2px;color:#ffffef}
+			.button{border:1px solid #000000;height:1em;width:auto;margin:1px;padding:5px;;color:#ffffef;cursor:pointer}
+			.button:hover{background-color:rgba(15,25,35,.9)}
+.button,.holder,.title{background-color:rgba(15,25,35,.3);
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;}
+.holder,.holder .title,.holder .button{box-shadow: 0px 0px 12px rgba(0,0,0,.7)}
+.title{font-size:14px;background-color:rgba(255,255,255,.3)}
+.title:hover{background-color:rgba(255,255,255,.6)}
+.holder{margin:4px;padding:4px;display:block}
+#interface{top:15px;left:15px;width:5px;height:5px;}
+			.setcolor{margin:1px;padding:2px;cursor:pointer;border:1px solid #444455}
+			.dataInput{width:2em}
+			.menu{padding:5px;height:auto;overflow:hidden}
+			.menu strong{margin:5px}
+			.menu span{margin:5px}
+			.menu a{margin:5px}
+			.menu:hover{height:auto;overflow:hidden}
+			.selected{border:1px solid #cacff8;background-color:rgba(202,207,248,.4)}
+			.selectedColor{margin-top:8px;padding-top:8px;}
+			#cmd{font-size:12px;height:18px;color:white}
+			#cmd input{;font-size:9px;}
+			#cmd span{;font-size:12px;}
+			#cmd .x{color:#FFaaaa;background-color:#885555}
+			#cmd .z{color:#aaffaa;background-color:#558855;}
+			#cmd .y{color:#aaaaff;background-color:#555588;}
+		</style>
+	</head>
+	<body onload="retrieveScene()" onunload="if(confirm('save ?'))rememberScene()">
+
+		<!--script type="text/javascript" src="./js/Three.js"></script-->
+		<!--script type="text/javascript" src="./js/CanvasRenderer.js"></script-->
+		<script type="text/javascript" src="./js/ThreeCanvas.js"></script>
+		<script type="text/javascript" src="./old/vector3.js"></script>
+		<script type="text/javascript" src="./js/Cube.js"></script>
+		<script type="text/javascript" src="./js/Plane.js"></script>
+		<script type="text/javascript" src="./js/convertor.js"></script>
+		<script type="text/javascript" src="./js/objectManager.js"></script>
+		<script type="text/javascript" src="./js/tools.js"></script>
+		<script type="text/javascript" src="./js/interface.js"></script>
+		<script type="text/javascript" src="./js/storage.js"></script>
+		<script type="text/javascript">
+		//drag=new Drag('title','holder');
+		//copy=false;
+
+		
+		
+
+{/////// section Tools
+
+}
+//////// end of Tools 
+/////// section interface connectors
+asd=new THREE.Vertex(new THREE.Vector3())
+if(asd.__proto__)asd.__proto__.selected=false;
+else if(asd.prototype)asd.prototype.selected=false;
+else if(asd.constructor)asd.constructor.selected=false;
+r2d=180/Math.PI;d2r=Math.PI/180;
+			var gCO=['source-atop','source-in','source-out','source-over','destination-atop','destination-in','destination-out','destination-over','lighter','darker','xor','copy']
+			var isShiftDown = false, isCTRLDown = false;var snap=true;
+			var standardLibrary=new ObjectLibrary('./objectLibrary/objects.txt','Standard')
+			var localLibrary,models;
+			
+			var auth=new AuthenticationProtocol('alfy');
+			var container,options={RenderMethod:['MeshColorFillMaterial','MeshColorStrokeMaterial'],snap:[true,false]},interval,RenderMethod='MeshColorFillMaterial',input, mark='000000000',
+			camera, camera2, scene, renderer, renderer2, selectWin,mask, ind={},selection=new Selection(),currentTool,interface,FOV=45,DEP=20000,
+			projector, plane, cube, linesMaterial,definition=50, tk=new Tick(new THREE.Vector3()),solid=1,transparent=0.5,
+			color = 0,colors = [ 0xDF1F1F, 0xDFAF1F, 0x80DF1F, 0x1FDF50, 0x2F7FaF, 0x1F4FDF, 0x7F1FDF, 0xDF1FAF, 0xFFFFFF, 0x303030, 0x999999 ,0xFFFFFF],alphas = [ 1.0, 1.0, 1.0, 1.0, .5, 1.0, .5, .5, 1.0, 1.0, 1.0,.2 ],
+			materials=[
+			function(a){ return new THREE[RenderMethod]( colors[0], a||alphas[0] )},
+			function(a){ return new THREE[RenderMethod]( colors[1], a||alphas[1] )},
+			function(a){ return new THREE[RenderMethod]( colors[2], a||alphas[2] )},
+			function(a){ return new THREE[RenderMethod]( colors[3], a||alphas[3] )},
+			function(a){ return new THREE[RenderMethod]( colors[4], a||alphas[4] )},
+			function(a){ return new THREE[RenderMethod]( colors[5], a||alphas[5] )},
+			function(a){ return new THREE[RenderMethod]( colors[6], a||alphas[6] )},
+			function(a){ return new THREE[RenderMethod]( colors[7], a||alphas[7] )},
+			function(a){ return new THREE[RenderMethod]( colors[8], a||alphas[8] )},
+			function(a){ return new THREE[RenderMethod]( colors[9], a||alphas[9] )},
+			function(a){ return new THREE[RenderMethod]( colors[10], a||alphas[10] )},
+			function(a){ return new THREE[RenderMethod]( colors[11], a||alphas[11] )}],
+			selectedGripMaterial=new THREE.MeshColorStrokeMaterial( 0xFF0000, 1 ),
+			Tools=[new UIButton('select','settool'),new UIButton('erase','settool'),new UIButton('splitFace','settool'),new UIButton('move','settool'),new UIButton('copy','settool'),new UIButton('rotate','settool')],
+			Primitives=[new UIButton('block','settool'),new UIButton('frame','settool'),new UIButton('mesh','settool'),new UIButton('polyface','settool')],
+			MeshTools=[new UIButton('renderPreview','execute'),new UIButton('renderWindow','execute'),new UIButton('optimizeMesh','execute'),new UIButton('convertToEditableMesh','execute'),new UIButton('mergeMeshes','execute')],
+			ImportExport=[new UIButton('rememberScene','execute'),new UIButton('addToLibrary','execute'),new UIButton('addToMyModels','execute'),new UIButton('exportForKerkytheea','execute'),new UIButton('exportWavefrontOBJ','execute'),new UIButton('exportCurrentView','execute'),new UIButton('exportPreviewWindow','execute'),new UIButton('cacheScene','execute'),new UIButton('retrieveSceneFromCache','execute')],
+			SelectTools=[new UIButton('selectAll','execute'),new UIButton('selectByCurrentColor','execute'),new UIButton('clear','execute')],
+			TextureObjects=['UVs','stone','wood','foliage','grass','glass','plastic','carpet','fabric','plaster','asphalt','metal'],
+			selecting=false,rendering=false,
+			ray, brush, objectHovered,que,enabled=false,
+			mouse3D, isMouseDown = false, onMouseDownPosition,
+			radious = 100000/FOV, theta = 60, onMouseDownTheta = 60, phi = 45, onMouseDownPhi = 45,
+			isShiftDown = false,phase=true,mouseUp=true;
+
+				//is=function(v){if(v) return !v}
+				error1=false;
+			init();
+			selectWin=new Selector(),mask=new Mask()
+			render(false);
+			mask.show()
+bearing={};bearing2={}
+TList=function(){
+var cnt=0
+this.__defineGetter__('count',function(){return cnt})
+this.__defineSetter__('count',function(v){cnt=v})
+}
+textures={count:0}
+		
+
+textureList=['UV','00_brick_s','00_brick','00_stone','00_stone_01','01_wood_00','01_wood_0','01_wood_01','01_wood_02','01_wood_03','01_wood_04','02_foliage','03_Grass','04_glass','05_plastic','06_carpet','07_fabric','08_plaster','09_asphalt','10_metal','grid']
+
+for(var i in textureList)textures['t_'+textureList[i]]=new Texture('./textures/'+textureList[i]+'.png');
+compoundMaterials=[]
+	colorSwatch=new ColorSwatch()
+	
+when(textures,'count',textureList.length,function(){
+	con.clear;var tl=toolbar(['addMaterialToLibrary'],'layeredMaterials',{x:230,y:65,w:140},'LayeredMaterials');
+	utils.element.appendChild(tl);tl.children[1].style.display='none'
+	textureSwatch=new TextureSwatch(textures)
+	for(var i in textures){
+	if(typeof(textures[i])=='number')continue
+	asd=new StandardMaterialDialog(i,[new ColorButton(1,1,1,1,'source-over',25),new TextureButton(textures[i],'darker',25),new ColorButton(1,1,1,.1,'lighter',25)]);
+	compoundMaterials.push(new THREE.MeshColorFillMaterial(0xDD4411,1),new THREE.MeshBitmapMaterial(textures[i]),new THREE.MeshColorFillMaterial(0xDD4411,.3))
+	tl.children[1].appendChild(asd.element);}
+	/*compoundMaterials=[
+	[new THREE.MeshColorFillMaterial(0xDD4411,1),new THREE.MeshBitmapMaterial(textures.t_00_brick.element),new THREE.MeshColorFillMaterial(0xDD4411,.3)],
+	[new THREE.MeshColorFillMaterial(0xDFAF1F,1),new THREE.MeshBitmapMaterial(textures.t_00_stone.element),new THREE.MeshColorFillMaterial(0xDFAF1F,.3)],
+	[new THREE.MeshColorFillMaterial(0xAA4422,1),new THREE.MeshBitmapMaterial(textures.t_01_wood_00.element),new THREE.MeshColorFillMaterial(0xAA4422,.3)],
+	[new THREE.MeshColorFillMaterial(0x80DF1F,1),new THREE.MeshBitmapMaterial(textures.t_03_Grass.element),new THREE.MeshColorFillMaterial(0x80DF1F,.3)],
+	[new THREE.MeshColorFillMaterial(0x1FDF50,1),new THREE.MeshBitmapMaterial(textures.t_02_foliage.element),new THREE.MeshColorFillMaterial(0x1FDF50,.3)],
+	[new THREE.MeshColorFillMaterial(0x2F7FaF,1),new THREE.MeshBitmapMaterial(textures.t_04_glass.element),new THREE.MeshColorFillMaterial(0x2F7FaF,.3)],
+	[new THREE.MeshColorFillMaterial(0xDFAF1F,1),new THREE.MeshBitmapMaterial(textures.t_06_carpet.element),new THREE.MeshColorFillMaterial(0xDFAF1F,.3)],
+	[new THREE.MeshColorFillMaterial(0x7F1FDF,1),new THREE.MeshBitmapMaterial(textures.t_07_fabric.element),new THREE.MeshColorFillMaterial(0x7F1FDF,.3)],
+	[new THREE.MeshColorFillMaterial(0xFFFFFF,1),new THREE.MeshBitmapMaterial(textures.t_08_plaster.element),new THREE.MeshColorFillMaterial(0xFFFFFF,.3)],
+	[new THREE.MeshColorFillMaterial(0x444444,1),new THREE.MeshBitmapMaterial(textures.t_09_asphalt.element),new THREE.MeshColorFillMaterial(0x444444,.3)],
+	[new THREE.MeshColorFillMaterial(0x999999,1),new THREE.MeshBitmapMaterial(textures.t_10_metal.element),new THREE.MeshColorFillMaterial(0x999999,.3)],
+	[new THREE.MeshColorFillMaterial(0x999999,1),new THREE.MeshBitmapMaterial(textures.t_grid.element),new THREE.MeshColorFillMaterial(0x999999,.3)]
+	]*/
+	mask.hide();
+	var setWidth=230//parseInt(renderer.domElement.width)
+	var tl=toolbar([''],'preview',{w:setWidth+10},'Preview');
+	interface.element.appendChild(tl)
+				renderer2 = new THREE.CanvasRenderer();
+				
+				renderer2.setSize( setWidth, setWidth*renderer.domElement.height/renderer.domElement.width );
+	tl.children[1].children[0].appendChild(renderer2.domElement);tl.children[1].children[0].className="holder";with(tl.children[1].style){backgroundColor='#556250'}
+	if(!localStorage.firstTime){retrieveSceneFromCache();localStorage.firstTime='\s'}
+	//plane.material[0]=compoundMaterials[5][1]
+	render();
+	con.out='ready'
+	})
+var interface,pane,utils,tl_tools,tl_primitives,tl_MeshTools,tl_ImportExport,tl_SelectTools;
+//////// end of Interface connectors
+			function init() {
+				
+				container = document.body;
+				
+				interface=new UIContainer('leftPane')
+				interface.setStyle({position:'absolute',top:'5px',left:'5px',width:'160px',textAlign:'center'})
+				container.appendChild( interface.element );
+				
+				pane=new UIContainer('rightPane')
+				pane.setStyle({position:'absolute',top:'5px',right:'200px',width:'5px',textAlign:'center'})
+				container.appendChild( pane.element );
+				
+				utils=new UIContainer('topPane')
+				utils.setStyle({position:'absolute',top:'5px',left:'5px',width:'160px',textAlign:'center'})
+				container.appendChild( utils.element );
+				
+				pane.element.appendChild(auth.UIdialog.toolbar.element)
+				
+				tl_tools=new UIToolbar('Tools',Tools);
+				tl_tools.setSize(185);tl_tools.appendTo(interface.element);
+				
+				tl_primitives=new UIToolbar('Primitives',Primitives);
+				tl_primitives.setSize(185);
+				tl_primitives.appendTo(interface.element);tl_primitives.element.children[1].style.display='none'
+				
+				/*var opt=[];for(i in options){opt.push(i)}
+				var tl=toolbar(opt,'setoption',{},'Options');
+				interface.appendChild(tl);tl.children[1].style.display='none';*/
+				
+				tl_MeshTools=new UIToolbar('MeshTools',MeshTools);
+				tl_MeshTools.setSize(185);
+				tl_MeshTools.appendTo(interface.element);tl_MeshTools.element.children[1].style.display='none'
+				
+				tl_ImportExport=new UIToolbar('ImportExport',ImportExport);
+				tl_ImportExport.setSize(185);
+				tl_ImportExport.appendTo(interface.element);tl_ImportExport.element.children[1].style.display='none'
+
+				tl_SelectTools=new UIToolbar('SelectTools',SelectTools);
+				tl_SelectTools.setSize(185);
+				tl_SelectTools.appendTo(interface.element);tl_SelectTools.element.children[1].style.display='none'
+				
+				var tl=toolbar([''],'import',{},'Import',function(obj){obj.innerHTML+='Scale:<input type="text" size="2" value="1" /><textarea style="height:200px;width:175px;font-size:12px;color:#aaaaaa;overflow-y:scroll;display:block" id="in"></textarea><input type="submit" value="Import" onclick="importObj(objImporter(h.gt(\'in\').value),parseFloat(h.gt(\'in\').previousElementSibling.value));render();h.pD(event)">'});
+				interface.element.appendChild(tl);tl.children[1].style.display='none';
+				
+				var tl=toolbar([''],'properties',{x:490,y:5,w:460},'Properties',function(obj){obj.innerHTML+='<form id="cmd" onsubmit="transform();h.pD(event||e)" name="coordinates"><span type="text" value="volume"></span> Position[<input type="text" name"px" class="dataInput x" value=""/><input name"py" type="text" class="dataInput y" value=""/><input name"pz" type="text" class="dataInput z" value=""/><input name"lockPos" title="relative position" type="checkbox" class="dataInput pos" checked="true"/>]rotation[<input name"rx" type="text" class="dataInput x" value=""/><input name"ry" type="text" class="dataInput y" value=""/><input name"rz" type="text" class="dataInput z" value=""/><input name"lockRot" title="relative rotation" type="checkbox" class="dataInput rot" checked="true"/>]scale[<input name"sx" type="text" class="dataInput x" value=""/><input name"sy" type="text" class="dataInput y" value=""/><input name"sz" type="text" class="dataInput z" value=""/><input name"lockScale" title="relative scale" type="checkbox" class="dataInput scale" checked="true"/>]color<input name"color" type="text" class="dataInput" value=""/><input type="submit" style="width:0px;padding:0px;margin:0px;height:0px;border:0px dotted #ffffff;" name="Submit" value="transform"/></form>'});
+				utils.element.appendChild(tl);
+				
+				var tl=toolbar(colors,'color',{x:230,y:5,w:240},'Materials',function(obj){for(var i in colors){var ccl=colors[i]& 0xffffff;ccl=ccl.toString(16)
+				obj.innerHTML+="<span class='setcolor' onclick='color=parseInt(this.innerHTML)' style='background-color:#"+ccl+";color:#"+ccl+"'> "+i+" </span>"}});
+				utils.element.appendChild(tl);
+				//onChange('currentTool',function(){con.out=currentTool;var target=h.gP(h.gt('Tools'),'innerHTML',currentTool)||h.gP(h.gt('Primitives'),'innerHTML',currentTool);setTool(target)},window)
+				watchList=
+			[
+				{obj:selection,val:null,parameter:'k',target:{},f:function(value,target){
+				if(selection.objects.length){
+								var last=selection.objects[selection.objects.length-1];
+								var cmd=document.forms[1];
+								var title=h.gt('cmd').parentNode.parentNode.children[0];
+								title.innerHTML=Prototype(last.geometry)+': Properties ('+selection.objects.length+' objects)';
+								cmd[0].value=last.position.x;
+								cmd[1].value=last.position.y;
+								cmd[2].value=last.position.z;
+								cmd[4].value=parseInt(rad2deg(last.rotation.x));
+								cmd[5].value=parseInt(rad2deg(last.rotation.y));
+								cmd[6].value=parseInt(rad2deg(last.rotation.z));
+								cmd[8].value=last.scale.x;
+								cmd[9].value=last.scale.y;
+								cmd[10].value=last.scale.z;
+								cmd[12].value=colors.indexOf(last.material[0].color.hex&0xFFFFFF);}}},
+				{obj:window,val:window.currentTool,parameter:'currentTool',target:{},f:function(value,target){
+				var target=h.gP(h.gt('Tools'),'innerHTML',currentTool)||h.gP(h.gt('Primitives'),'innerHTML',currentTool);
+				setTool(target)}},
+				{obj:window,val:0,parameter:'color',target:{},f:function(value,target){
+				brush.material[ 0 ]=new THREE.MeshColorStrokeMaterial(colors[value],1);setColor(h.gP(h.gt('Materials'),'innerHTML',color));if(selection.objects.length){for(var j in selection.objects){
+				selection.objects[j].material[0]=materials[color]();
+				}
+				updateHash();render();}}},
+				{obj:h.gt('cmd').children[1],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='100000000000'}},
+				{obj:h.gt('cmd').children[2],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='010000000000'}},
+				{obj:h.gt('cmd').children[3],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='001000000000'}},
+				{obj:h.gt('cmd').children[4],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000100000000'}},
+				{obj:h.gt('cmd').children[5],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000010000000'}},
+				{obj:h.gt('cmd').children[6],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000001000000'}},
+				{obj:h.gt('cmd').children[7],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000000100000'}},
+				{obj:h.gt('cmd').children[8],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000000010000'}},
+				{obj:h.gt('cmd').children[9],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000000001000'}},
+				{obj:h.gt('cmd').children[10],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000000000100'}},
+				{obj:h.gt('cmd').children[11],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000000000010'}},
+				{obj:h.gt('cmd').children[12],val:0,parameter:'value',target:selection.objects,f:function(value,target){mark='000000000001'}}
+		]
+		
+
+				
+				camera = new THREE.Camera( FOV, window.innerWidth / window.innerHeight, 1, DEP );
+				camera.position.x = radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+				camera.position.y = radious * Math.sin( phi * Math.PI / 360 );
+				camera.position.z = radious * Math.cos( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+				camera._tP=camera.position.clone()
+				camera.target.position.y = 180;
+				camera._tT=camera.target.position.clone()
+
+				scene = new THREE.Scene();
+
+				// Grid
+
+/////////////////////////////////////////////////////////////////////////////
+				var geometry = new THREE.Geometry();
+				geometry.vertices.push( new THREE.Vertex( new THREE.Vector3( -2500 , 0, 0 ) ) );
+				geometry.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );
+				//for(var vv=-2500;vv<1;vv+=250)geometry.vertices.push( new THREE.Vertex( new THREE.Vector3( vv, 0, 0 ) ) );
+
+				linesMaterial5 = new THREE.LineColorMaterial( 0x000000, .2 );
+				linesMaterial10 = new THREE.LineColorMaterial( 0x000000, .5 );
+				linesMaterialRed = new THREE.LineColorMaterial( 0xFF0000, 1 );
+				linesMaterialGreen = new THREE.LineColorMaterial( 0x00FF00, 1 );
+				linesMaterialBlue = new THREE.LineColorMaterial( 0x0000FF, 1 );
+				linesMaterialRed1 = new THREE.LineColorMaterial( 0xFF0000, .2 );
+				linesMaterialGreen1 = new THREE.LineColorMaterial( 0x00FF00, .2 );
+				linesMaterialBlue1 = new THREE.LineColorMaterial( 0x0000FF, .2 );
+				var lineColors=[linesMaterial10,linesMaterial5]
+				for ( var i = 0; i <= (1000/definition); i ++ ) {
+
+					var line = new THREE.Line( geometry, (i%2)?linesMaterial10:(i==10)?linesMaterialRed1:linesMaterial5 );
+					line.position.z = ( i * definition*5 ) - 2500
+					if(i==10)scene.addObject( line );
+					var line = new THREE.Line( geometry, (i%2)?linesMaterial10:(i==10)?linesMaterialRed:linesMaterial5 );
+					line.position.z = ( i * definition*5 ) - 2500
+					line.position.x = 2500
+					if(i==10)scene.addObject( line );
+
+					var line = new THREE.Line( geometry, (i%2)?linesMaterial10:(i==10)?linesMaterialGreen:linesMaterial5 );
+					line.position.x = ( i * definition*5 ) - 2500
+					line.rotation.y = 90 * Math.PI / 180;
+					if(i==10)scene.addObject( line );
+					var line = new THREE.Line( geometry, (i%2)?linesMaterial10:(i==10)?linesMaterialGreen1:linesMaterial5 );
+					line.position.x = ( i * definition*5 ) - 2500
+					line.position.z = - 2500
+					line.rotation.y = 90 * Math.PI / 180;
+					if(i==10)scene.addObject( line );
+
+				}
+				var geometry = new THREE.Geometry();
+				//for(var vv=0;vv<2501;vv+=250)geometry.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, vv, 0 ) ) );
+				geometry.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 0, 0 ) ) );
+				geometry.vertices.push( new THREE.Vertex( new THREE.Vector3( 0, 2500, 0 ) ) );
+					var line = new THREE.Line( geometry, linesMaterialBlue );
+					scene.addObject( line );
+					var line = new THREE.Line( geometry, linesMaterialBlue1 );
+					line.position.y=-2500
+					scene.addObject( line );
+//////////
+				planeMaterial=new THREE.MeshColorFillMaterial(0x224411,.001)
+			/*	plnMaterial=new THREE.MeshColorStrokeMaterial(0x000000,1)
+				pvert=[];pface=[]
+				for(var j=0;j<1600;j++){pvert.push({x:(j%40)*definition,y:0,z:definition*parseInt(j/40)})}
+				for(var i=0;i<1559;i++){
+				//pface.push({a:i,b:i+1,c:i+11,d:i+10})
+				pface.push({a:i+1,b:i,c:i+40,d:i+41})
+				}
+
+				plnMesh=new MultyMesh( pvert, pface ,true,true)
+				plane = new THREE.Mesh( plnMesh,plnMaterial);*/
+				var planeSize=10000
+				var 
+				c1=new THREE.Vector3(-planeSize,0,planeSize),
+				c12=new THREE.Vector3(0,0,planeSize),
+				c2=new THREE.Vector3(planeSize,0,planeSize),
+				c23=new THREE.Vector3(planeSize,0,0),
+				c3=new THREE.Vector3(planeSize,0,-planeSize),
+				c34=new THREE.Vector3(0,0,-planeSize),
+				c4=new THREE.Vector3(-planeSize,0,-planeSize),
+				c41=new THREE.Vector3(-planeSize,0,0),
+				c5=new THREE.Vector3(0,0,0)
+				Plane=MultyMesh
+				Plane.prototype=new THREE.Geometry()
+				Plane.prototype.constructor=Plane
+				//plane = new THREE.Mesh( new Plane([c1,c12,c2,c23,c3,c34,c4,c41,c5],[{a:7,b:0,c:1,d:8},{a:1,b:2,c:3,d:8},{a:3,b:4,c:5,d:8},{a:5,b:6,c:7,d:8}]),planeMaterial);
+				plane = new THREE.Mesh( new Plane([c1,c2,c3,c4,c5],[{a:0,b:1,c:2,d:3}]),planeMaterial);
+				//plane.rotation.x = - 90 * Math.PI / 180;
+				//plane.position=new THREE.Vector3(-5000,0,-5000);
+				//plane.scale=new THREE.Vector3(5,0,5);
+				//plane.position.y=-2500
+				plane.geometry.faces[0].normal=new THREE.Vector3(0,1,0)
+				plane.geometry.uvs=[new THREE.UV(0,10),new THREE.UV(10,10),new THREE.UV(10,0),new THREE.UV(0,0)]
+				plane.plane=true
+				plane.overdraw=true
+				scene.addObject( plane );
+
+/////////////////////////////////////////////////////////////////////////////
+				cube = new Cube3( 1, 1, 1,definition );
+
+				ray = new THREE.Ray( camera.position, null );
+				projector = new THREE.Projector();
+				
+				brush = new THREE.Mesh( cube, new THREE.MeshColorStrokeMaterial(colors[color],1) );
+				brush.position.y = 2000;
+				brush.overdraw = true;
+				scene.addObject( brush );
+				
+				
+				
+				
+				
+				onMouseDownPosition = new THREE.Vector2();
+
+				// Lights
+
+				var ambientLight = new THREE.AmbientLight( 0x404040 );
+				scene.addLight( ambientLight );
+
+				var directionalLight = new THREE.DirectionalLight( 0xffffff );
+				directionalLight.position.x = 1;
+				directionalLight.position.y = 1;
+				directionalLight.position.z = 0.75;
+				directionalLight.position.normalize();
+				scene.addLight( directionalLight );
+				
+				/*var geometry = new THREE.Geometry();
+				geometry.vertices.push( new THREE.Vertex( directionalLight.position.clone().multiplyScalar(2000) ));
+				geometry.vertices.push( new THREE.Vertex( new THREE.Vector3() ) );
+					var line = new THREE.Line( geometry, linesMaterialBlue );
+					scene.addObject( line );*/
+					
+				var directionalLight = new THREE.DirectionalLight( 0x808080 );
+				directionalLight.position.x = - 1;
+				directionalLight.position.y = 1;
+				directionalLight.position.z = - 0.75;
+				directionalLight.position.normalize();
+				scene.addLight( directionalLight );
+				
+				camera2 = new THREE.Camera( 15, 1, 1, 22000 );
+				camera2.position=directionalLight.position.clone().multiplyScalar(10000)//new THREE.Vector3(-1,18000,0)
+				camera2.target.position=new THREE.Vector3(0,0,0)
+				camera2.updateMatrix()
+				/*var geometry = new THREE.Geometry();
+				geometry.vertices.push( new THREE.Vertex( directionalLight.position.clone().multiplyScalar(2000) ));
+				geometry.vertices.push( new THREE.Vertex( new THREE.Vector3() ) );
+					var line = new THREE.Line( geometry, linesMaterialRed );
+					scene.addObject( line );*/
+					
+				renderer = new THREE.CanvasRenderer();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				container.appendChild(renderer.domElement);
+				element=h.tg("canvas");
+				document.addEventListener( 'keydown', onDocumentKeyDown, false );
+				document.addEventListener( 'keyup', onDocumentKeyUp, false );
+
+				element.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				element.addEventListener( 'mousedown', onDocumentMouseDown, false );
+				element.addEventListener( 'mouseup', onDocumentMouseUp, false );
+				
+				document.body.addEventListener( 'mousemove', onBodyMouseMove, false );
+				document.body.addEventListener( 'mousedown', onBodyMouseDown, false );
+				document.body.addEventListener( 'mouseup', onBodyMouseUp, false );
+
+				element.addEventListener( 'mousewheel', onDocumentMouseWheel, false );
+				element.addEventListener( 'DOMMouseScroll', onDocumentMouseWheel, false );
+
+				if ( window.location.hash ) {
+
+					buildFromHash();
+
+				}
+				currentTool='select';
+				color=8;
+			}
+			var rdq=[]
+			function undo(){
+				document.execCommand('undo');
+				if(scene.objects.length)rdq.push(scene.objects.pop())
+				con.out='undo';
+				render()
+				//eval('history.go(-1);location.reload()')
+			}
+			function redo(){
+				document.execCommand('redo');
+				con.out='redo'
+				if(rdq.length)scene.objects.push(rdq.pop())
+				render()
+				//history.go(1);location.reload()
+				}
+			function onDocumentKeyDown( event ) {
+				switch( event.keyCode ) {
+					
+					case 16: isShiftDown = true; break;
+					case 17: isCTRLDown = true;selectWin.operation='removeObject';break;
+					case 90: if(event.ctrlKey){undo()}; break;
+					case 89: if(event.ctrlKey){redo()}; break;
+					case 27: 
+						if(window.worker1!=undefined)window.worker1.terminate();
+						if(window.worker2!=undefined)window.worker2.terminate();
+						if(window.worker3!=undefined)window.worker3.terminate();
+						if(window.worker4!=undefined)window.worker4.terminate();
+						deselect();
+						render();
+						currentTool='select';
+						rendering=false;
+						break;
+					case 32: currentTool='select'; break;
+					case 81: if(event.ctrlKey){selectAll();currentTool='select'} break;
+					case 77: currentTool='move'; break;
+					case 67: currentTool='copy'; break;
+					case 82: currentTool='rotate'; break;
+					case 66: currentTool='block'; break;
+					case 87: currentTool='frame'; break;
+					case 46: for(var i in selection.objects){rdq.push(selection.objects[i]);scene.removeObject(selection.objects[i])}selection.deselect();updateHash();render();currentTool='erase'; break;
+				}
+			}
+
+			function onDocumentKeyUp( event ) {
+				switch( event.keyCode ) {
+
+					case 16: isShiftDown = false; interact(); render(); break;
+					case 17: isCTRLDown = false;selectWin.operation='addObject'; interact(); render(); break;
+
+				}
+
+			}
+
+			function onDocumentMouseDown( event ) {
+			mouseUp=false;
+				focus()
+				h.pD(event)
+				isMouseDown = true;
+				rightClick=(event.button==2)||(event.button==4);
+				middleClick=!rightClick&&(event.button!==0)
+				onMouseDownTheta = theta;
+				onMouseDownPhi = phi;
+				onMouseDownPosition.x = event.clientX;
+				onMouseDownPosition.y = event.clientY;
+				if(currentTool=='select' && !rightClick&&!middleClick&& !isShiftDown)
+				{
+				ind.x = parseInt(event.clientX);
+				ind.y = parseInt(event.clientY);
+				selectWin.position(ind.x,ind.y);
+				selectWin.show()
+				//document.body.appendChild(selectWin.d)
+				mask.show()
+				}
+			}
+
+			function onBodyMouseDown( event ) {
+				
+				rightClick=(event.button==2)||(event.button==4);
+				middleClick=!rightClick&&(event.button!==0)
+				//
+				
+			}
+			function onBodyMouseUp( event ) {
+			//alert();
+				if((currentTool=='select' && !rightClick&&!middleClick&& !isShiftDown)){
+				if(selectWin.ttd)selectWin.operation='addObject'
+				else selectWin.operation='removeObject'
+				if(!selectWin.rtl)selectWin.getCrossing()
+				else selectWin.getWindow()
+				}
+				selectWin.position(0,0)
+				selectWin.size(1,1)
+				mask.hide()
+				selectWin.hide();
+				isMouseDown=false
+				mouseUp=true
+				}
+			function onBodyMouseMove( event ) {
+			h.pD(event);
+				rightClick=(event.button==2)||(event.button==4);
+				middleClick=!rightClick&&(event.button!==0)
+			if(isMouseDown){
+				if(currentTool=='select' && !rightClick && !middleClick)
+				{
+				var ddd=0,rtl=event.clientX>ind.x,ttd=event.clientY>ind.y
+				if(rtl){var Mx=event.clientX-ddd,mx=ind.x+ddd}else{var Mx=ind.x-ddd,mx=event.clientX+ddd}
+				if(ttd){var My=event.clientY-ddd;var my=ind.y+ddd}else{var My=ind.y-ddd;var my=event.clientY+ddd}
+				selectWin.rtl=rtl
+				selectWin.ttd=ttd
+				selectWin.position(mx,my)
+				selectWin.size(Mx-mx,My-my)
+				}
+			
+			}
+			}
+			function onDocumentMouseMove( event ) {
+				h.pD(event)
+				mouse3D = projector.unprojectVector( new THREE.Vector3( ( event.clientX / renderer.domElement.width ) * 2 - 1, - ( event.clientY / renderer.domElement.height ) * 2 + 1, 0.5 ), camera );
+				ray.direction = mouse3D.clone().subSelf( camera.position ).normalize();
+				if(isMouseDown){
+				if ( rightClick) {
+					theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 ) + onMouseDownTheta;
+					phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 ) + onMouseDownPhi;
+
+					phi = Math.min( 180, Math.max( 0, phi ) );
+					
+					camera.position.x = camera._tT.x+radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+					camera.position.y = camera._tT.y+radious * Math.sin( phi * Math.PI / 360 );
+					camera.position.z = camera._tT.z+radious * Math.cos( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+					camera._tP=camera.position.clone()
+					camera.updateMatrix();
+
+				}
+				if(middleClick){
+				var orient=THREE.Vector.rec2polar(THREE.Vector.diff(camera._tT,camera._tP));
+				var multiplier=isCTRLDown?.5:isShiftDown?10:2
+				var addVector=new THREE.Vector3(( -( event.clientX - onMouseDownPosition.x )*Math.cos(orient.a)*2  ),0,( -( event.clientY - onMouseDownPosition.y )*Math.sin(orient.a)*2 )).multiplyScalar(multiplier)
+				camera.target.position=camera._tT.clone().addSelf(addVector);
+				//camera.position=camera._tP.clone().addSelf(addVector)
+					camera.updateMatrix();
+				}
+				}
+				interact();
+				render();
+			}
+
+			function onDocumentMouseUp( event ) {
+				regen()
+				camera._tP=camera.position.clone()
+				camera._tT=camera.target.position.clone()
+				mouseUp=true;
+				isMouseUp=false;
+				phase=true;updateHash();
+				middleClick=false
+				onMouseDownPosition.x = event.clientX - onMouseDownPosition.x;
+				onMouseDownPosition.y = event.clientY - onMouseDownPosition.y;
+				rightClick=false;
+			if(!rightClick){
+				if ( onMouseDownPosition.length() > 5 ) {
+
+					return;
+
+				}
+
+				var intersect, intersects = ray.intersectScene( scene );
+
+				if ( intersects.length > 0 ) {
+
+					intersect = intersects[ 0 ].object == brush ? intersects[ 1 ] : intersects[ 0 ];
+
+					if ( intersect ) {
+
+						if ( currentTool=='erase' ) {
+							if ( intersect.object != plane ) {
+							
+							if(!isShiftDown){rdq.push(intersect.object);scene.removeObject( intersect.object );}
+								else intersect.object.geometry.faces.splice(intersect.object.geometry.faces.indexOf(intersect.face),1)
+							updateHash();
+
+							}
+
+						}
+						if ( currentTool=='splitFace' ) {
+							if ( intersect.object != plane ) {
+								refineFace(intersect.object,intersect.face)
+							updateHash();
+
+							}
+
+						}
+						if ( currentTool=='mesh' ) {
+						
+						if(!input){
+						input=[]
+						var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+								}
+								else
+								{
+								var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+								//var rotation=intersect.object.rotation.clone()
+							input[input.length] ={x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+//
+							if(input[0].x>=input[1].x){var mxx=input[0].x;var mnx=input[1].x;}else{var mxx=input[1].x;var mnx=input[0].x;}
+							if(input[0].y>=input[1].y){var mxy=input[0].y;var mny=input[1].y;}else{var mxy=input[1].y;var mny=input[0].y;}
+							if(input[0].z>=input[1].z){var mxz=input[0].z;var mnz=input[1].z;}else{var mxz=input[1].z;var mnz=input[0].z;}
+							cube2=new Mesh(mnx,mny,mnz,Math.abs(mxx-mnx)+definition,Math.abs(mxy-mny)+definition,Math.abs(mxz-mnz)+definition)
+							var voxel = new THREE.Mesh( cube2, materials[color]() );
+							//voxel.rotation=rotation;
+							voxel.overdraw = true;
+							scene.addObject( voxel );
+							updateHash();
+								
+							input=null;
+								}
+							}
+						if ( currentTool=='block' ) {
+						
+						if(!input){
+						input=[]
+						var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+								}
+								else
+								{
+								var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+								//var rotation=intersect.object.rotation.clone()
+							input[input.length] ={x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+//
+							if(input[0].x>=input[1].x){var mxx=input[0].x;var mnx=input[1].x;}else{var mxx=input[1].x;var mnx=input[0].x;}
+							if(input[0].y>=input[1].y){var mxy=input[0].y;var mny=input[1].y;}else{var mxy=input[1].y;var mny=input[0].y;}
+							if(input[0].z>=input[1].z){var mxz=input[0].z;var mnz=input[1].z;}else{var mxz=input[1].z;var mnz=input[0].z;}
+							cube2=new Volume(1,1,1,definition)
+							var voxel = new THREE.Mesh( cube2, materials[color]() );
+							voxel.position.x = mnx;
+							voxel.position.y = mny;
+							voxel.position.z = mnz;
+							voxel.scale.x = Math.abs(mxx-mnx)/definition+1;
+							voxel.scale.y = Math.abs(mxy-mny)/definition+1;
+							voxel.scale.z = Math.abs(mxz-mnz)/definition+1;
+							//voxel.rotation=rotation;
+							voxel.overdraw = true;
+							scene.addObject( voxel );
+							updateHash();
+								
+							input=null;
+								}
+							}
+						if ( currentTool=='polyface' ) {
+						
+						if(!input){
+						input=[]
+						var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+								}
+								else
+								{
+								var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							input.push({x:floor( position.x ),y:floor( position.y ),z:floor( position.z )});
+							if(input.length==4){
+							face1=new THREE.Face4(0,1,2,3);
+							face2=new THREE.Face4(0,3,2,1);
+							var voxel = new THREE.Mesh( new MultyMesh( input,[face1,face2] ), materials[color]() );
+							voxel.overdraw = true;
+							scene.addObject( voxel );
+							updateHash();
+							input=null;
+								}
+							}
+						}
+						if ( currentTool=='frame' ) {
+						
+						if(!input){
+						input=[]
+						var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+						
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+								}
+								else
+								{
+								var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+							var dd=0
+							if(input[0].x>=input[1].x){var mxx=input[0].x+dd;var mnx=input[1].x;}else{var mxx=input[1].x;var mnx=input[0].x;}
+							if(input[0].y>=input[1].y){var mxy=input[0].y+dd;var mny=input[1].y;}else{var mxy=input[1].y;var mny=input[0].y;}
+							if(input[0].z>=input[1].z){var mxz=input[0].z+dd;var mnz=input[1].z;}else{var mxz=input[1].z;var mnz=input[0].z;}
+							
+						var truncX0=(intersect.object!==plane)&&(mnx==input[0].x)&&(mnz==input[1].z)
+						var truncX1=(intersect.object!==plane)&&(mnx==input[1].x)&&(mnz==input[0].z)
+						var truncZ0=(intersect.object!==plane)&&(mnz==input[0].z)&&(mxz==input[1].z)
+						var truncZ1=(intersect.object!==plane)&&(mnz==input[1].z)&&(mxz==input[0].z)
+						
+							var vx=function(px,py,pz,dx,dy,dz)
+							{
+							var voxel = new THREE.Mesh( new Volume(1,1,1,definition) , materials[color]() );
+							voxel.position.x = px;
+							voxel.position.y = py;
+							voxel.position.z = pz;
+							voxel.scale.x = dx;
+							voxel.scale.y = dy;
+							voxel.scale.z = dz;
+							voxel.overdraw=true
+							return voxel;
+							}
+							
+							//voxel.rotation=rotation;
+							function column(tx,ty,tz)
+							{
+							scene.addObject( vx(tx,ty,tz,1,2,1) );
+							scene.addObject( vx(tx,ty+2*definition,tz,1,3,1) );
+							scene.addObject( vx(tx,ty+5*definition,tz,1,1,1) );
+							}
+							function wx(tx,ty,tz,w,d)
+							{
+							w/=definition
+							d/=definition
+							scene.addObject( vx(tx,ty,tz,w?w:1,2,d?d:1) );
+							scene.addObject( vx(tx,ty+2*definition,tz,w?w:1,3,d?d:1) );
+							scene.addObject( vx(tx,ty+5*definition,tz,w?w:1,1,d?d:1) );
+							}
+							var dz=isCTRLDown?0:definition
+							var dx=isShiftDown?0:definition
+							oneX=(Math.abs(mxx-mnx)/definition-(dx?1:0))?0:1
+							oneZ=(Math.abs(mxz-mnz)/definition-(dz?1:0))?0:1
+							if(!isCTRLDown&&!isShiftDown)
+							{column(mnx,mny,mnz);
+							column(mxx,mny,mxz);
+							column(mxx,mny,mnz);
+							column(mnx,mny,mxz);}
+							if(!isCTRLDown)wx(mnx+dx,mny,mnz,Math.abs(mxx-mnx)-dx,definition);
+							if(!isCTRLDown)wx(mnx+dx,mny,mxz,Math.abs(mxx-mnx)-dx,definition);
+							if(!isShiftDown)wx(mnx,mny,mnz+dz,definition,Math.abs(mxz-mnz)-dz);
+							if(!isShiftDown)wx(mxx,mny,mnz+dz,definition,Math.abs(mxz-mnz)-dz);
+							scene.addObject(vx(mnx+dx,mny+5*definition,mnz+dz,Math.abs(mxx-mnx)/definition-(dx?1:0)+oneX,1,Math.abs(mxz-mnz)/definition-(dz?1:0)+oneZ))
+							updateHash();
+							brush.geometry=new Cube3( 1, 1, 1,definition )
+							input=null;
+								}
+							}
+						if ( currentTool=='move' ) {
+						
+						if(!input){
+						input=[]
+						var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+							for(var i in selection.objects){selection.objects[i]._tP=new THREE.Vector3(selection.objects[i].position.x,selection.objects[i].position.y,selection.objects[i].position.z)}
+								}
+								else
+								{
+								for(var i in selection.objects)
+								{var o=selection.objects[i]
+								var isMesh=o.geometry instanceof Mesh || o.geometry instanceof MultyMesh
+							//alert(isMesh)
+							var vert=o.geometry.vertices
+							if(isMesh)for(var k in vert)vert[k]._tP=vert[k].position.clone()
+							
+							}
+							updateHash();
+							input=null;
+								}
+							}
+						if ( currentTool=='rotate' ) {
+						
+						var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+						if(!input){
+							for(var i in selection.objects){
+							selection.objects[i]._tP=new THREE.Vector3(selection.objects[i].position.x,selection.objects[i].position.y,selection.objects[i].position.z)
+							selection.objects[i]._tR=new THREE.Vector3(selection.objects[i].rotation.x,selection.objects[i].rotation.y,selection.objects[i].rotation.z)
+							if(selection.objects[i].geometry instanceof MultyMesh || selection.objects[i].geometry instanceof Mesh)for(var k in selection.objects[i].geometry.vertices){selection.objects[i].geometry.vertices[k]._tP=selection.objects[i].geometry.vertices[k].position.clone()}
+								}
+							input=[]
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+							}
+							else
+							{
+								input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+								if(input.length==3){
+									updateHash();
+									input=null;
+								}
+							}
+						}
+						if ( currentTool=='copy' ) {
+						
+						if(!input){
+						input=[]
+						var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							input[input.length] = {x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+							var tempsel=selection.clone().objects;
+							if(deselect())
+							for(var i in tempsel){
+							var o=tempsel[i],m=tempsel[i].material;//m.pop()
+							var uv=tempsel[i].geometry.uvs,isMesh=o.geometry instanceof Mesh || o.geometry instanceof MultyMesh,isCube=o.geometry instanceof Volume
+							if(isMesh){
+							var vert=[],face4=[],face3=[],centroids=[]
+							var v=o.geometry.vertices
+							var f=o.geometry.faces
+							for(var j in v){vert.push(new THREE.Vector3(v[j].position.x,v[j].position.y,v[j].position.z))}
+							for(var j in f){
+							if(f[j].d) {
+							face4.push({a:f[j].a,b:f[j].b,c:f[j].c,d:f[j].d})
+							} else {
+							face3.push({a:f[j].a,b:f[j].b,c:f[j].c})
+							}
+							//centroids.push(f[j].centroid)
+							}
+							var proto=new MultyMesh(vert,face4,face3)//,centroids)
+							var vert=proto.vertices
+							for(var k in vert){vert[k]._tP=vert[k].position.clone()}
+							}
+							else{var proto=new Volume(1,1,1,definition)}
+							var s=new THREE.Mesh( proto, m );
+							s.material=[]
+							for(var i in m)s.material.push(m[i]);
+							s.geometry.uvs=uv;
+							s.position=o.position.clone();
+							s.rotation=o.rotation.clone();
+							s.scale=o.scale.clone();
+							scene.addObject(s);
+							selection.addObject(s)}
+								}
+								else
+								{
+								for(var i in selection.objects)
+								{
+								//var o=selection.objects[i]
+								//var isMesh=o.geometry instanceof Mesh || o.geometry instanceof MultyMesh
+							//alert(isMesh)
+							//var vert=o.geometry.vertices
+							//if(isMesh)for(var k in vert)vert[k]._tP=vert[k].position.clone()
+							}
+							updateHash();
+							input=null;
+								}
+							}
+							
+					
+					}
+
+				}
+			}else{}
+			
+				isMouseDown = false;
+				mouseUp=true
+				rightClick=false;
+				interact();
+				render();
+
+			}
+
+			function onDocumentMouseWheel( event ) {
+
+				//radious -=event.detail?(-event.detail*25):(window.opera)?(-event.wheelDelta/120):(event.wheelDelta)?(event.wheelDelta/120):event.wheelDeltaY;
+				var value=event.wheelDeltaY?(event.wheelDeltaY):-event.detail*10;
+				if(0){
+				var intersect, intersects = ray.intersectScene( scene );
+
+				if ( intersects.length > 0 ) {
+
+					intersect = intersects[ 0 ].object == brush ? intersects[ 1 ] : intersects[ 0 ];
+					//intersect=intersect.object
+					var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );}
+				
+					camera.target.position.x+=intersect.point.x/10
+					camera.target.position.y+=intersect.point.y/10
+					camera.target.position.z+=intersect.point.z/10
+					}
+				radious -=value
+				//alert(event.detail)
+				camera.position.x = camera._tT.x+radious * Math.sin( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+				camera.position.y = camera._tT.y+radious * Math.sin( phi * Math.PI / 360 );
+				camera.position.z = camera._tT.z+radious * Math.cos( theta * Math.PI / 360 ) * Math.cos( phi * Math.PI / 360 );
+				camera.updateMatrix();
+
+				interact();
+				render();
+
+			}
+
+
+object={};
+			function interact() {
+
+				var position, intersect, intersects = ray.intersectScene( scene );
+
+				if ( intersects.length > 0 ) {
+					var sel=selection.objects[0]
+					intersect = intersects[ 0 ].object != brush ? intersects[ 0 ] : intersects[ 1 ];
+					
+					if ( intersect ) {
+
+						if ( currentTool=='erase' ||  currentTool=='select') {
+
+						} else {
+							if ( currentTool=='block' || currentTool=='frame' || currentTool=='mesh') {
+							position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+						//var rotation=intersect.object.rotation.clone()
+							if(!input){
+							brush.scale=new THREE.Vector3(1,1,1)
+							brush.rotation.y=0;
+							brush.position.x = floor( position.x );
+							brush.position.y = floor( position.y );
+							brush.position.z = floor( position.z );}
+							else {
+							var position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							var rotation=intersect.object.rotation.clone()
+							//input[input.length] ={x:floor( position.x ),y:floor( position.y ),z:floor( position.z )};
+//
+
+							var dd=definition;
+							if(input[0].x>=position.x){var mxx=input[0].x+dd;var mnx=position.x;}else{var mxx=position.x;var mnx=input[0].x;}
+							if(input[0].y>=position.y){var mxy=input[0].y+dd;var mny=position.y;}else{var mxy=position.y;var mny=input[0].y;}
+							if(input[0].z>=position.z){var mxz=input[0].z+dd;var mnz=position.z;}else{var mxz=position.z;var mnz=input[0].z;}
+							
+							brush.position.x = floor( mnx );
+							brush.position.y = floor( mny );
+							brush.position.z = floor( mnz );
+							brush.rotation.y = rotation.y;
+							brush.scale.x = floor(mxx-mnx)/definition+1;
+							brush.scale.y = floor(mxy-mny)/definition+1;
+							brush.scale.z = floor(mxz-mnz)/definition+1;
+							}
+							}
+							if ( currentTool=='move' || currentTool=='polyface') {
+							if(!isCTRLDown) position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) )
+							else  position = intersect.object.position.clone()
+						//var rotation=intersect.object.rotation.clone()
+							if(!input){
+							
+							brush.scale=new THREE.Vector3(1,1,1)
+							brush.rotation.y=0;
+							brush.position.x = floor( position.x );
+							brush.position.y = floor( position.y );
+							brush.position.z = floor( position.z );
+							}
+							else {
+							brush.position.x = floor( position.x );
+							brush.position.y = floor( position.y );
+							brush.position.z = floor( position.z );
+							
+							fp=new THREE.Vector3(floor(position.x),floor(position.y),floor(position.z))
+							lp=new THREE.Vector3(input[0].x,input[0].y,input[0].z)
+							dP=fp.sub(fp,lp);
+							//for(var i in selection.objects){selection.objects[i].position.add(selection.objects[i]._tP,dP)}
+							for(var i in selection.objects){
+							var o=selection.objects[i]
+							var isMesh=o.geometry instanceof Mesh || o.geometry instanceof MultyMesh
+							//alert(isMesh)
+							if(!isMesh)o.position.add(selection.objects[i]._tP,dP)
+							if(isMesh){for(var j in o.geometry.vertices){
+							o.geometry.vertices[j].position.add(o.geometry.vertices[j]._tP,dP)}
+							for(var j in o.geometry.faces){
+							o.geometry.faces[j].centroid.add(o.geometry.vertices[j]._tP,dP)}
+							}
+							}
+							}
+							}
+							if ( currentTool=='rotate' ) {
+							position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+						//var rotation=intersect.object.rotation.clone()
+							if(!input){
+							
+							brush.scale=new THREE.Vector3(1,1,1)
+							brush.rotation.y=0;
+							brush.position = new THREE.Vector3(floor( position.x ),floor( position.y ),floor( position.z ));
+							}
+							else {
+							diffr1=THREE.Vector.diff(position,input[0])
+							bearing1=THREE.Vector.rec2polar(diffr1);
+							brush.scale.x = bearing1.R/definition;
+							var angSnap=Math.PI*5/180
+							ang1=parseInt((bearing1.a)/angSnap)*angSnap
+							brush.rotation.y=parseFloat(ang1);
+							tm=THREE.Matrix4.translationMatrix(-input[0].x,-input[0].y,-input[0].z)
+							rtm=THREE.Matrix4.translationMatrix(input[0].x,input[0].y,input[0].z)
+							if(input[1]){
+							diffr1=THREE.Vector.diff(input[1],input[0])
+							bearing1=THREE.Vector.rec2polar(diffr1);
+							diffr2=THREE.Vector.diff(position,input[0])
+							bearing2=THREE.Vector.rec2polar(diffr2);
+							var angSnap=Math.PI*5/180
+							ang=parseInt((bearing2.a-bearing1.a)/angSnap)*angSnap
+							rm=THREE.Matrix4.rotationYMatrix(ang)
+							
+							for(var i in selection.objects){
+							var o=selection.objects[i]
+							if(o.geometry instanceof MultyMesh || o.geometry instanceof Mesh)
+								{
+									var vv=o.geometry.vertices;
+									for(var j in vv){
+									vv[j].position=rtm.transform(rm.transform(tm.transform(vv[j]._tP.clone())))
+									}
+							}
+							else
+								{
+								o.rotation.y=ang
+								var newPosition=rtm.transform(rm.transform(tm.transform(o._tP.clone())))
+								o.position.x=newPosition.x
+								o.position.y=newPosition.y
+								o.position.z=newPosition.z
+								}
+							}
+							}else {}
+							}
+							}
+							if ( currentTool=='copy' ) {
+							position = new THREE.Vector3().add( intersect.point, intersect.object.matrixRotation.transform( intersect.face.normal.clone() ) );
+							if(!input){
+							
+							brush.scale=new THREE.Vector3(1,1,1)
+							brush.rotation.y=0;
+							brush.position.x = floor( position.x );
+							brush.position.y = floor( position.y );
+							brush.position.z = floor( position.z );
+							}
+							else {
+							brush.position.x = floor( position.x );
+							brush.position.y = floor( position.y );
+							brush.position.z = floor( position.z );
+							
+							fp=new THREE.Vector3(floor(position.x),floor(position.y),floor(position.z))
+							lp=new THREE.Vector3(input[0].x,input[0].y,input[0].z)
+							dP=fp.sub(fp,lp);
+							for(var i in selection.objects){
+							var o=selection.objects[i]
+							var isMesh=o.geometry instanceof Mesh || o.geometry instanceof MultyMesh
+							//alert(isMesh)
+							if(!isMesh)o.position.add(selection.objects[i]._tP,dP)
+							if(isMesh){for(var j in o.geometry.vertices){o.geometry.vertices[j].position.add(o.geometry.vertices[j]._tP,dP)}
+							for(var j in o.geometry.faces){
+							o.geometry.faces[j].centroid.add(o.geometry.vertices[j]._tP,dP)}
+							}
+							}
+							}
+							}
+							return;
+
+						}
+					}
+
+				}
+
+				brush.position.y = 2000;
+
+			}
+			var toScreenCoordinates=function(a,b){
+			return {
+				x:(2* a / renderer.domElement.width-1),
+				y:(-2*b/renderer.domElement.height+1)
+				}
+			}
+			function toCanvasCoordinates(a,b){
+			return {
+				x:(a+1)*renderer.domElement.width/2,
+				y:(1-b)*renderer.domElement.height/2
+				}
+			}
+			var method='render'
+			function render(debug) {
+				try{
+				
+				if(!rendering){renderer2[method]( scene, camera)//, 'rgba(255,128,32,.1)' );
+				renderer[method]( scene, camera )
+				}
+				
+				}catch(e){}//{if(debug==undefined)con.out='renderer'+Prototype(e)+ listobj(e)};
+				var ctx=renderer.domElement.getContext('2d');
+				sun=scene.lights[1].position.clone().multiplyScalar(4000)
+				camera.matrix.transform(sun)
+				camera.projectionMatrix.transform(sun)
+				
+				var pc=toCanvasCoordinates(sun.x,sun.y)
+				if((sun.z*1000-999)>0)for(var k=0;k<1;k+=.05){
+				ctx.fillStyle='rgba(255,255,200,'+(k*k*k)+')'
+				ctx.lineWidth=2;
+				ctx.beginPath();
+				ctx.arc(pc.x, pc.y, 25*(1-k), 0, Math.PI*2, true); 
+				ctx.closePath();
+				ctx.fill();}
+				if(selection.objects[0]){
+					for(var k in selection.objects){
+						var o=selection.objects[k]
+						var v=selection.objects[k].geometry.vertices;
+						var tick=o.geometry instanceof Tick
+						for(var i in v){
+							if(v[i].__visible || tick){
+								var p=v[i].positionScreen;
+								var pc=toCanvasCoordinates(p.x,p.y) ;
+								ctx.lineWidth=2;
+								ctx.fillStyle='rgba(255,0,0,1)'
+								ctx.beginPath();
+								ctx.arc(pc.x, pc.y, 2, 0, Math.PI*2, true);
+								ctx.closePath();
+								ctx.fill();
+								//ctx.stroke();
+							}
+						
+						}
+					}
+				}
+			}
+
+			
+			function doall()
+			{
+			all();
+			setTimeout(doall,41)
+			}
+			con=new Console();
+	con.element.style.left='0px';
+	con.element.style.bottom=(document.body.offsetHeight-80)+'px'
+	con.height=80;
+	con.processor=con.processors._EVAL
+	utils.element.appendChild(con.element);
+				appendListeners(interface.element,listeners,false);
+				appendListeners(pane.element,listenersPane,false);
+				appendListeners(utils.element,listenersUtils,false);
+				appendListeners(h.tg('canvas'),listenersCanvas,false);
+			function all(){watchObjects(watchList)}
+			doall();
+			asd=new THREE.FaceN()
+			
+			//whenever('asd!==2',function(){con.out='not 2'})
+			//onChange('asd',"con.out='asd changed to '+asd",window)
+			//asd=renderPhotons(scene.lights[1],4000)
+		</script>
+		<script></script>
+		
+		
+
+	
+
+</body></html>

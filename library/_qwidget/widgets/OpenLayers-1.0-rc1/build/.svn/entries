@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="692"
+   name=""
+   committed-date="2006-06-22T20:14:21.767568Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/build"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="654"
+   name="license.txt"
+   text-time="2006-07-05T14:27:35.000000Z"
+   committed-date="2006-06-21T15:15:53.688137Z"
+   checksum="1b2b134ebb129760c465bece485910e5"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:35.000000Z"/>
+<entry
+   committed-rev="675"
+   name="library.cfg"
+   text-time="2006-07-05T14:27:35.000000Z"
+   committed-date="2006-06-22T15:59:23.465152Z"
+   checksum="735ac3aefea5e86c793acfb4c2d1cf38"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:35.000000Z"/>
+<entry
+   committed-rev="692"
+   name="build.sh"
+   text-time="2006-07-05T14:27:35.000000Z"
+   committed-date="2006-06-22T20:14:21.767568Z"
+   checksum="97f059a0bf5a8954cec0329cfe2f0341"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:35.000000Z"/>
+<entry
+   committed-rev="470"
+   name="README.txt"
+   text-time="2006-07-05T14:27:35.000000Z"
+   committed-date="2006-05-30T12:07:11.770266Z"
+   checksum="b9e88aec0050175bf1e6c3baf05c2124"
+   last-author="follower"
+   kind="file"
+   prop-time="2006-07-05T14:27:35.000000Z"/>
+</wc-entries>

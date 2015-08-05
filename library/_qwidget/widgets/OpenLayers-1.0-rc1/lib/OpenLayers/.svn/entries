@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="685"
+   name=""
+   committed-date="2006-06-22T19:28:31.951707Z"
+   url="http://svn.openlayers.org/tags/openlayers/release-1.0-rc1/lib/OpenLayers"
+   last-author="sderle"
+   kind="dir"
+   uuid="dc9f47b5-9b13-0410-9fdd-eb0c1a62fdaf"
+   revision="883"/>
+<entry
+   committed-rev="657"
+   name="Events.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="70fe71b812fe1fddb9e37a6ccd85903f"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:36.000000Z"/>
+<entry
+   name="Control"
+   kind="dir"/>
+<entry
+   committed-rev="657"
+   name="Layer.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="ce23ccadd4ffe7220d02e4b43369ac3d"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="657"
+   name="Util.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="7cf3d5eda52ffc84a635f19042ee3ad7"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="674"
+   name="Map.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-22T15:35:33.354879Z"
+   checksum="7308e33157eafaafe7f5e7cf65a5fea1"
+   last-author="crschmidt"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="657"
+   name="Control.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="861b50c0fcf92db0ee4738d513ce6934"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   name="Feature"
+   kind="dir"/>
+<entry
+   committed-rev="657"
+   name="Marker.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="878ca9c6ae8fd493f90a8706895ade67"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="657"
+   name="SingleFile.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="5849c60ae0bde98d2c2eef2b8cfdbff7"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   name="Tile"
+   kind="dir"/>
+<entry
+   committed-rev="657"
+   name="Ajax.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="28daaed222ff8d729b56abed2f01ee0b"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="657"
+   name="Icon.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="80a94271f1797c10f82b1868c7304c44"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   name="Popup"
+   kind="dir"/>
+<entry
+   committed-rev="657"
+   name="Feature.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="973d251924e1a748a4a0235628455c6f"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   committed-rev="657"
+   name="Tile.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="137e6548897be56ddf48254bdc025d35"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+<entry
+   name="Layer"
+   kind="dir"/>
+<entry
+   committed-rev="657"
+   name="Popup.js"
+   text-time="2006-07-05T14:27:37.000000Z"
+   committed-date="2006-06-21T15:22:48.881907Z"
+   checksum="6f4af8fb3bd306d0d994b7cff7cc47ff"
+   last-author="sderle"
+   kind="file"
+   prop-time="2006-07-05T14:27:37.000000Z"/>
+</wc-entries>

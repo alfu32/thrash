@@ -1,0 +1,107 @@
+<style>
+    .QPropertyView td img{
+        width:32px;
+    }
+    input{
+        border:1px solid #889;
+        align:center;
+    }
+    .QPropertyView{
+        border-collapse:collapse;
+        border:1px solid #f8f8ff;
+    }
+    .QPropertyView .td{
+        background:#889;
+    }
+    .QPropertyView .body{
+        background:#EEF;
+    }
+    td.procConnector{
+        background:#FFF;
+        width:48px;
+    }
+    .procConnector img{
+        width:48px;
+    }
+    .QPropertyView .type{
+        background:#889;
+        font-size:12px;
+        font-style:italic;
+    }
+    .QPropertyView .name{
+        background:#889;
+        font-size:16px;
+    }
+    .QPropertyView .procName{
+        font-size:16px;
+        font-style:oblique;
+        width:120px;
+    }
+    .QPropertyView .procConnector{
+        border:1px solid #f8f8ff;
+        border-right:0px solid #FFF;
+        background:#f8f8ff;
+        width:5px;
+    }
+    .QPropertyView .procConnector:hover{
+        background:#fff;
+    }
+    .QPropertyView .bodyMiddle,.QPropertyView .bodyTop,.QPropertyView .bodyBottom{
+        height:15px;
+        background:#EEF;
+    }
+    .QPropertyView .bodyTop{
+        height:6px;
+        background:#889;
+        border-bottom:1px solid #f8f8ff;
+    }
+    .QPropertyView .bodyMiddle{
+        height:15px;
+    }
+    .QPropertyView .bodyBottom{
+        border-right:1px solid #f8f8ff;
+    }
+</style>
+<table class="QPropertyView">
+    <tr class='head type'>
+        <td colspan=2>
+            ##Q_OBJECT_NAME##
+        </td>
+    </tr>
+    <tr class='head name'>
+        <td colspan=2>
+            <input class="head name" type="text" value="##NAME##">
+        </td>
+    </tr>
+    <tr class='bodyTop'>
+        <td colspan=2>
+
+        </td>
+    </tr>
+    <tr class='body beforeSet'>
+        <td class="procName" align="center">
+            beforeSet
+        </td>
+        <td class="procConnector" align="right" colspan=1>
+            <img src="img/q-obj-view-conn-in.png">
+        </td>
+    </tr>
+    <tr class='bodyMiddle'>
+        <td colspan=3>
+
+        </td>
+    </tr>
+    <tr class='body afterSet'>
+        <td class="procName" align="center">
+            afterSet
+        </td>
+        <td class="procConnector"  align="right" colspan=1>
+            <img src="img/q-obj-view-conn-out.png">
+        </td>
+    </tr>
+    <tr class='bodyBottom'>
+        <td colspan=3>
+
+        </td>
+    </tr>
+</table>
