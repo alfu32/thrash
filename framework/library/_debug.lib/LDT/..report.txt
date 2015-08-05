@@ -1,2 +1,0 @@
-\inetpub\wwwroot\portail\library\_debug.lib\LDT\..report.txt
-\inetpub\wwwroot\portail\library\_debug.lib\LDT\ldt.php

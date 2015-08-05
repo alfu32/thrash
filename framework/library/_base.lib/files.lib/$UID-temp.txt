@@ -1,3 +1,0 @@
-\inetpub\wwwroot\portail\library\..report.txt
-\inetpub\wwwroot\portail\library\mylibrary.js
-\inetpub\wwwroot\portail\library\_qsys.lib

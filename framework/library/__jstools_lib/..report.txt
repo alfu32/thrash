@@ -1,5 +1,0 @@
-\inetpub\wwwroot\portail\library\__jstools_lib\..
-\inetpub\wwwroot\portail\library\__jstools_lib\..report.txt
-\inetpub\wwwroot\portail\library\__jstools_lib\JSLint.php
-\inetpub\wwwroot\portail\library\__jstools_lib\JSMin.php
-\inetpub\wwwroot\portail\library\__jstools_lib\xform.js
